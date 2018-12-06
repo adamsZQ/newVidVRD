@@ -20,3 +20,8 @@ def get_test_data():
             with open(os.path.join(path, file), 'r') as f:
                 test_json_res.append(json.loads(f.read()))
     return test_json_res
+
+
+def get_frames(frames_path):
+    for path, dir_list, file_list in os.walk(frames_path):
+        print(file_list)
