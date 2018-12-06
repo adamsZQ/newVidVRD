@@ -23,5 +23,8 @@ def get_test_data():
 
 
 def get_frames(frames_path):
+    frames_path_res = []
     for path, dir_list, file_list in os.walk(frames_path):
-        print(file_list)
+        for file in file_list:
+            frames_path_res.append(os.path.join(path, file))
+    return frames_path_res

@@ -1,5 +1,6 @@
 import argparse
-import utils.frames as frames
+from utils.frames import extract_frames
+from utils.get_data import get_frames
 
 
 def main():
@@ -13,12 +14,19 @@ def main():
                              help="The path of Video to be extracted.")
     frame_group.add_argument('-fn', '--FramesNum', type=int, default=-1,
                              help="The number of Frames to be extracted")
+    # Frame Path
+    parser.add_argument('-fp', '--FramePath', type=str, default='./frames/data/VidVRD-videos/')
 
     my_args = parser.parse_args()
     print(my_args)
 
     if my_args.Extract is True:
-        frames.extract_frames(my_args.VideoPath, my_args.FramesNum)
+        extract_frames(my_args.VideoPath, my_args.FramesNum)
+        frames = get_frames('./frames/data/VidVRD-videos/')
+    else:
+        frames = get_frames(my_args.FramePath)
+
+    print(frames)
 
 
 if __name__ == '__main__':
