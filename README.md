@@ -36,6 +36,13 @@ Step 2: install tensor2tensor
 ```bash
 pip install -r requirements.txt
 ```
+Dataset:
+NUS-VidVRD: http://lms.comp.nus.edu.sg/research/VidVRD.html
+
 
 ### Download Pretrained Model
+
+We adopted the Faster-RCNN model from: https://github.com/endernewton/tf-faster-rcnn
+
+And the result of this step can be download from: https://drive.google.com/drive/folders/1I2LLIVNAcOe2DWZZ_bzovY1o2MgvYy4s?hl=zh-CN
 

@@ -19,6 +19,8 @@ def extract_frames(video_file, num_frames=8):
         os.makedirs(os.path.join(os.getcwd(), 'frames'))
     except OSError:
         pass
+    if num_frames == -1:
+        return extract_all_frames(video_file)
 
     output = subprocess.Popen(['ffmpeg', '-i', video_file],
                               stderr=subprocess.PIPE).communicate()
@@ -42,6 +44,17 @@ def extract_frames(video_file, num_frames=8):
     res_frames = load_frames(extract_frame_paths)
     # subprocess.call(['rm', '-rf', 'frames'])
     return res_frames, extract_frame_paths
+
+
+def extract_all_frames(video_file):
+    try:
+        os.makedirs(os.path.join(os.getcwd(), 'frames/' + video_file))
+    except OSError:
+        pass
+
+    extract_frame_path = os.getcwd() + '/frames/' + video_file
+    os.system('ffmpeg -i ' + video_file + ' ' + extract_frame_path + '/%4d.jpg')
+    return extract_frame_path
 
 
 def load_frames(frame_paths, num_frames=8):
