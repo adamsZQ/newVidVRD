@@ -1,4 +1,6 @@
+h5py
 Pillow
+cmake
 numpy
 opencv-python
 torch>=0.4.0
@@ -14,3 +16,6 @@ pyyaml
 tensorboardX
 imageio
 git+git://github.com/pytorch/text
+keras
+tqdm
+dlib

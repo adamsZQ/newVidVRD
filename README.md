@@ -33,12 +33,20 @@ Step 2: install tensor2tensor
 
 ### Python Package
 
+Dataset:
+NUS-VidVRD: http://lms.comp.nus.edu.sg/research/VidVRD.html
+```bash
+sudo add-apt-repository ppa:djcj/hybrid
+sudo apt-get update
+sudo apt-get install ffmpeg
+sudo apt-get install build-essential cmake
+sudo apt-get install libgtk-3-dev
+sudo apt-get install libboost-all-dev
+```
+
 ```bash
 pip install -r requirements.txt
 ```
-Dataset:
-NUS-VidVRD: http://lms.comp.nus.edu.sg/research/VidVRD.html
-
 
 ### Download Pretrained Model
 
