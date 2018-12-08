@@ -54,3 +54,4 @@ We adopted the Faster-RCNN model from: https://github.com/endernewton/tf-faster-
 
 And the result of this step can be download from: https://drive.google.com/drive/folders/1I2LLIVNAcOe2DWZZ_bzovY1o2MgvYy4s?hl=zh-CN
 
+https://github.com/tensorpack/tensorpack/tree/master/examples/FasterRCNN
