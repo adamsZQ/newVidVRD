@@ -107,3 +107,5 @@ frames/
 VideoData/
 
 data/
+
+model/FasterRCNN/
