@@ -3,15 +3,10 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
-import os
-
-from tensor2tensor.data_generators import generator_utils
 from tensor2tensor.data_generators import image_utils
-from tensor2tensor.layers import modalities
 from tensor2tensor.utils import registry
 
-import tensorflow as tf
-
+from utils.get_relation_list import gen_relations
 """
 image generation with transformer (attention).
 encoder: [Self-Attention, Feed-forward] x n
