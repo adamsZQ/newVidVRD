@@ -3,7 +3,6 @@
 extract_features.py
 
 Script to extract CNN features from video frames.
-
 """
 
 from __future__ import print_function
