@@ -54,3 +54,7 @@ def load_relation(file_path):
     with open(file_path, 'r') as f:
         s += f.readline()
     return ast.literal_eval(s)
+
+
+if __name__ == '__main__':
+    print(len(load_relation('../data/first_relation_dict.txt')))

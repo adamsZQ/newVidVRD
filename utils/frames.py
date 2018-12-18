@@ -7,6 +7,8 @@ import cv2
 import numpy as np
 from PIL import Image
 
+import extract_features as ext_features
+
 """
 sudo add-apt-repository ppa:djcj/hybrid
 sudo apt-get update
@@ -76,3 +78,12 @@ def render_frames(frames, prediction):
                     1, (255, 255, 255), 2)
         rendered_frames.append(img)
     return rendered_frames
+
+
+if __name__ == '__main__':
+    ext_features.extract_split_features(
+        '../data/VidVRD-videos/ILSVRC2015_train_00008004.mp4',
+        '../data/VidVRD-features/',
+        180,
+        185,
+    )

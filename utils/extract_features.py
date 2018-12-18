@@ -35,6 +35,80 @@ def crop_center(im):
         return im[int((h - w) / 2):int((h - w) / 2) + w, 0:w, :]
 
 
+def extract_split_features(input_vid, output_dir, begin_fid, end_fid, model_type='inceptionv3', batch_size=32):
+    name, _ = os.path.splitext(input_vid)
+    name = name.split('/')[-1]
+    output_dir = os.path.join(output_dir, 'vid_split_features', name)  # RGB features
+    # motion_dir = os.path.join(output_dir, 'motion') # Spatiotemporal features
+    # opflow_dir = os.path.join(output_dir, 'opflow') # Optical flow features
+
+    for directory in [output_dir]:  # , motion_dir, opflow_dir]:
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+
+    if model_type.lower() == 'inceptionv3':
+        from keras.applications import InceptionV3
+        model = InceptionV3(include_top=True, weights='imagenet')
+    elif model_type.lower() == 'xception':
+        from keras.applications import Xception
+        model = Xception(include_top=True, weights='imagenet')
+    elif model_type.lower() == 'resnet50':
+        from keras.applications import ResNet50
+        model = ResNet50(include_top=True, weights='imagenet')
+    elif model_type.lower() == 'vgg16':
+        from keras.applications import VGG16
+        model = VGG16(include_top=True, weights='imagenet')
+    elif model_type.lower() == 'vgg19':
+        from keras.applications import VGG19
+        model = VGG19(include_top=True, weights='imagenet')
+    else:
+        sys.stderr.write("'%s' is not a valid ImageNet model.\n" % model_type)
+        sys.exit(1)
+
+    if model_type.lower() == 'inceptionv3' or model_type.lower() == 'xception':
+        shape = (299, 299)
+
+    # Get outputs of model from layer just before softmax predictions
+
+    from keras.models import Model
+    model = Model(model.inputs, output=model.layers[-2].output)
+
+    clip = VideoFileClip(input_vid)
+
+    frames = [scipy.misc.imresize(crop_center(x.astype(np.float32)), shape)
+              for idx, x in enumerate(clip.iter_frames())]
+
+    from keras.applications.imagenet_utils import preprocess_input
+
+    n_frames = end_fid - begin_fid + 1
+
+    frames_arr = np.empty((n_frames,) + shape + (3,), dtype=np.float32)
+
+    fid = 0
+    for idx, frame in enumerate(frames):
+        if begin_fid <= idx <= end_fid:
+            frames_arr[fid, :, :, :] = frame
+            fid += 1
+
+    # print(frames_arr)
+
+    frames_arr = preprocess_input(frames_arr)
+
+    features = model.predict(frames_arr, batch_size=batch_size)
+
+    feat_filepath = os.path.join(str(output_dir) + '/'
+                                 + str(name)
+                                 + '_' + str(begin_fid)
+                                 + '_' + str(end_fid)
+                                 + '.npy')
+
+    print(feat_filepath)
+
+    with open(feat_filepath, 'wb') as f:
+        np.save(f, features)
+    return features
+
+
 def extract_features(input_dir, output_dir, model_type='resnet50', batch_size=32):
     """
     Extracts features from a CNN trained on ImageNet classification from all
@@ -53,14 +127,6 @@ def extract_features(input_dir, output_dir, model_type='resnet50', batch_size=32
     if not os.path.isdir(input_dir):
         sys.stderr.write("Input directory '%s' does not exist!\n" % input_dir)
         sys.exit(1)
-
-    # Load desired ImageNet model
-
-    # Note: import Keras only when needed so we don't waste time revving up
-    #       Theano/TensorFlow needlessly in case of an error
-
-    model = None
-    input_shape = (224, 224)
 
     if model_type.lower() == 'inceptionv3':
         from keras.applications import InceptionV3
@@ -91,7 +157,7 @@ def extract_features(input_dir, output_dir, model_type='resnet50', batch_size=32
 
     # Create output directories
 
-    visual_dir = os.path.join(output_dir, 'visual')  # RGB features
+    visual_dir = os.path.join(output_dir, 'vid_full_features')  # RGB features
     # motion_dir = os.path.join(output_dir, 'motion') # Spatiotemporal features
     # opflow_dir = os.path.join(output_dir, 'opflow') # Optical flow features
 
@@ -164,5 +230,3 @@ if __name__ == '__main__':
 
     extract_features(input_dir=args.input, output_dir=args.output,
                      model_type=args.model, batch_size=args.batch_size)
-
-

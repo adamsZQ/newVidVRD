@@ -88,7 +88,7 @@ def detect():
     for index, st_rel in short_term_relations.items():
         vid = index[0]
         video_st_relations[vid].append((index, st_rel))
-    # video-level visual relation detection by relational association
+    # video-level vid_features relation detection by relational association
     print('greedy relational association ...')
     video_relations = dict()
     for vid in tqdm(video_st_relations.keys()):
@@ -103,7 +103,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='VidVRD baseline')
     parser.add_argument('--load_feature', action="store_true", default=False, help='Test loading precomputed features')
     parser.add_argument('--train', action="store_true", default=False, help='Train model')
-    parser.add_argument('--detect', action="store_true", default=False, help='Detect video visual relation')
+    parser.add_argument('--detect', action="store_true", default=False, help='Detect video vid_features relation')
     args = parser.parse_args()
 
     if args.load_feature or args.train or args.detect:

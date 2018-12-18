@@ -248,7 +248,7 @@ def predict(dataset, param):
         w = fin['/dense_1/dense_1/kernel:0'][:]
         b = fin['/dense_1/dense_1/bias:0'][:]
 
-    print('predicting short-term visual relation...')
+    print('predicting short-term vid_features relation...')
     pbar = tqdm(total=len(data_generator.index))
     short_term_relations = dict()
     # do not support prefetching mode in test phase

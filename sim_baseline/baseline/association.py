@@ -46,7 +46,7 @@ def _traj_iou(traj_1, traj_2):
 
 class VideoRelation(object):
     """
-        Represent video level visual relation instances
+        Represent video level vid_features relation instances
         ----------
         Properties:
         vid - video name

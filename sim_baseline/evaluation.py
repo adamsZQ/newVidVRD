@@ -138,7 +138,7 @@ def eval_tagging_scores(gt_relations, pred_relations):
 
 def eval_visual_relation(groundtruth, prediction, viou_threshold=0.5,
                          det_nreturns=None, tag_nreturns=None):
-    """ evaluate visual relation detection and visual
+    """ evaluate vid_features relation detection and vid_features
     relation tagging.
     """
     if tag_nreturns is None:
@@ -187,7 +187,7 @@ def eval_visual_relation(groundtruth, prediction, viou_threshold=0.5,
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Video visual relation evaluation.')
+    parser = argparse.ArgumentParser(description='Video vid_features relation evaluation.')
     parser.add_argument('prediction_file', type=str, help='Prediction json file')
     args = parser.parse_args()
     with open(args.prediction_file, 'r') as fin:

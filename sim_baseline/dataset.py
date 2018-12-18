@@ -86,7 +86,7 @@ class Dataset:
         return self.annos[vid]
 
     def get_relation_insts(self, vid, no_traj=False):
-        # get the visual relation instances labeled in a video,
+        # get the vid_features relation instances labeled in a video,
         # no_traj=True will not include trajectories, which is faster.
         global trajs
         anno = self.annos[vid]
