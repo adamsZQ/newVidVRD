@@ -246,4 +246,4 @@ if __name__ == '__main__':
         extract_features(input_dir=args.input, output_dir=args.output,
                          model_type=args.model, batch_size=args.batch_size)
     else:
-        extract_split_features(args.video, args.output, args.begin_dif, args.end_fid,)
+        extract_split_features(args.video, args.output, args.begin_fid, args.end_fid)
