@@ -216,7 +216,7 @@ def extract_features(input_dir, output_dir, model_type='resnet50', batch_size=32
 if __name__ == '__main__':
     parser = argparse.ArgumentParser("Extract ImageNet features from videos.")
 
-    parser.add_argument('-i', '--input', type=str, required=True,
+    parser.add_argument('-i', '--input', type=str, required=False,
                         help="Directory of videos to process.")
     parser.add_argument('-o', '--output', type=str, required=True,
                         help="Directory where extracted features should be stored.")
