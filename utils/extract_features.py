@@ -233,11 +233,11 @@ if __name__ == '__main__':
                         default='../data/VidVRD-videos/ILSVRC2015_train_00005015.mp4',
                         help="The path of video")
 
-    parser.add_argument('-b', '--begin_fid', type=int, required=False,
+    parser.add_argument('-bf', '--begin_fid', type=int, required=False,
                         default=0,
                         help="The begin id of frames")
 
-    parser.add_argument('-e', '--end_fid', type=int, required=False,
+    parser.add_argument('-ef', '--end_fid', type=int, required=False,
                         default=30,
                         help="The end id of frames")
     args = parser.parse_args()
