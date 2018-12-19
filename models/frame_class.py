@@ -2,7 +2,7 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
-from tensor2tensor.data_generators import problem, text_problems
+from tensor2tensor.data_generators import problem, image_utils
 from tensor2tensor.utils import registry
 
 import sys
@@ -13,15 +13,24 @@ import get_relation_list as vid_relation
 
 
 @registry.register_problem
-class FrameClass(text_problems.Text2ClassProblem):
-
-    def generator(self, data_dir, tmp_dir, is_training):
-        pass
+class FrameClass(image_utils.Image2ClassProblem):
 
     first_relation_path = '../data/first_relation_dict.txt'
     second_relation_path = '../data/second_relation_dict.txt'
     relation_path = first_relation_path
     # feature_path = '../data/VidVRD-features/vid_features'
+
+    classes_num = len(vid_relation.load_relation(relation_path))
+
+    @property
+    def num_generate_tasks(self):
+        return self.classes_num
+
+    def prepare_to_generate(self, data_dir, tmp_dir):
+        pass
+
+    def generator(self, data_dir, tmp_dir, is_training):
+        pass
 
     @property
     def num_channels(self):
@@ -33,7 +42,7 @@ class FrameClass(text_problems.Text2ClassProblem):
 
     @property
     def num_classes(self):
-        return len(vid_relation.load_relation(self.relation_path))
+        return self.classes_num
 
     @property
     def class_labels(self):
@@ -41,7 +50,7 @@ class FrameClass(text_problems.Text2ClassProblem):
 
     @property
     def train_shards(self):
-        return len(vid_relation.load_relation(self.relation_path))
+        return self.classes_num
 
     def feature_encoders(self, data_dir):
         del data_dir
