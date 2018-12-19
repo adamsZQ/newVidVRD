@@ -66,7 +66,9 @@ def gen_vrd_instance(feature_type):
                     each_relation['end_fid'],
                     each_relation['subject_tid'],
                     each_relation['object_tid'],
-                    each_relation['predicate']
+                    each_relation['predicate'],
+                    each_json['height'],
+                    each_json['width']
                 )
                 vrd_list.append(vrd_ins)
 
@@ -156,5 +158,4 @@ def gen_vrd_feature(output_dir='../data/VidVRD-features/separate_features'):
 
 if __name__ == '__main__':
     get_vid_sep_dict()
-    gen_vrd_feature()
-    # print(gen_vrd_instance('train')[10].predicate)
+    # gen_vrd_feature()

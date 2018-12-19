@@ -8,6 +8,7 @@ from tensor2tensor.utils import registry
 import sys
 sys.path.append("../utils")
 
+import numpy as np
 import get_data as vid_data
 import get_relation_list as vid_relation
 
@@ -15,12 +16,9 @@ import get_relation_list as vid_relation
 @registry.register_problem
 class FrameClass(image_utils.Image2ClassProblem):
 
-    first_relation_path = '../data/first_relation_dict.txt'
-    second_relation_path = '../data/second_relation_dict.txt'
-    relation_path = first_relation_path
     # feature_path = '../data/VidVRD-features/vid_features'
 
-    classes_num = len(vid_relation.load_relation(relation_path))
+    classes_num = len(vid_relation.load_relation('first'))
 
     @property
     def num_generate_tasks(self):
@@ -30,7 +28,7 @@ class FrameClass(image_utils.Image2ClassProblem):
         pass
 
     def generator(self, data_dir, tmp_dir, is_training):
-        pass
+        return self.vidvrd_generator()
 
     @property
     def num_channels(self):
@@ -56,10 +54,31 @@ class FrameClass(image_utils.Image2ClassProblem):
         del data_dir
         feature_type = 'train'
         for each_ins in vid_data.gen_vrd_instance(feature_type):
-            return {
+            yield {
                 "inputs": each_ins.get_my_feature(feature_type),
                 "targets": vid_relation.load_relation('first')[each_ins.predicate.split('_')[0]]
             }
+
+    def vidvrd_generator(self):
+        feature_type = 'train'
+        for each_ins in vid_data.gen_vrd_instance(feature_type):
+            yield {
+                "image/encoded": np.array2string(each_ins.get_my_feature(feature_type).ravel()),
+                "image/format": ["png"],
+                "image/class/label": [vid_relation.load_relation('first')[each_ins.predicate.split('_')[0]]],
+                "image/height": [each_ins.height],
+                "image/width": [each_ins.width]
+            }
+
+        # ins_list = vid_data.gen_vrd_instance(feature_type)
+        # for i in range(3):
+        #     yield {
+        #         "image/encoded": np.array2string(ins_list[i].get_my_feature(feature_type).ravel()),
+        #         "image/format": ["png"],
+        #         "image/class/label": [vid_relation.load_relation('first')[ins_list[i].predicate.split('_')[0]]],
+        #         "image/height": [ins_list[i].height],
+        #         "image/width": [ins_list[i].width]
+        #     }
 
 
 if __name__ == '__main__':

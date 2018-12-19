@@ -5,7 +5,7 @@ import os
 class VRDInstance:
     base_feature_path = '../data/VidVRD-features/separate_features/'
 
-    def __init__(self, video_id, objects, begin_fid, end_fid, subject_tid, object_tid, predicate):
+    def __init__(self, video_id, objects, begin_fid, end_fid, subject_tid, object_tid, predicate, height, width):
         self.video_id = video_id
         self.objects = objects
         self.begin_fid = begin_fid
@@ -13,6 +13,8 @@ class VRDInstance:
         self.subject_tid = subject_tid
         self.object_tid = object_tid
         self.predicate = predicate
+        self.height = height
+        self.width = width
 
     def get_my_feature(self, feature_type):
 
