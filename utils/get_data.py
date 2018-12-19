@@ -139,16 +139,22 @@ def gen_vrd_feature(output_dir='../data/VidVRD-features/separate_features'):
             print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n"
                   + "now is extracting: " + each_vrd_id)
             for (begin_fid, end_fid) in video_dict[each_vrd_id]:
-                print('( ' + str(begin_fid) + ', ' + str(end_fid) + ' )')
-                extract_split_features(
-                    base_vid_path + each_vrd_id + '.mp4',
-                    output_dir,
-                    begin_fid,
-                    end_fid
-                )
+                if not os.path.exists(
+                        output_dir + '/'
+                        + str(each_vrd_id) + '/'
+                        + str(each_vrd_id) + '_'
+                        + str(begin_fid) + '_'
+                        + str(end_fid) + '.npy'):
+                    print('( ' + str(begin_fid) + ', ' + str(end_fid) + ' )')
+                    extract_split_features(
+                        base_vid_path + each_vrd_id + '.mp4',
+                        output_dir,
+                        begin_fid,
+                        end_fid
+                    )
 
 
 if __name__ == '__main__':
-    # get_vid_sep_dict()
-    # gen_vrd_feature()
-    print(gen_vrd_instance('train')[10].predicate)
+    get_vid_sep_dict()
+    gen_vrd_feature()
+    # print(gen_vrd_instance('train')[10].predicate)
