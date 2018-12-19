@@ -57,10 +57,17 @@ class TextClass(text_problems.Text2ClassProblem):
         del dataset_split
 
         feature_type = 'train'
-        for each_ins in vid_data.gen_vrd_instance(feature_type):
+        # for each_ins in vid_data.gen_vrd_instance(feature_type):
+        #     yield {
+        #         "inputs": np.array2string(each_ins.get_my_feature(feature_type).ravel())[1:-1],
+        #         "targets": vid_relation.load_relation('first')[each_ins.predicate.split('_')[0]]
+        #     }
+
+        ins_list = vid_data.gen_vrd_instance(feature_type)
+        for i in range(3):
             yield {
-                "inputs": np.array2string(each_ins.get_my_feature(feature_type).ravel())[1:-1],
-                "targets": vid_relation.load_relation('first')[each_ins.predicate.split('_')[0]]
+                "inputs": np.array2string(ins_list[i].get_my_feature(feature_type).ravel())[1:-1],
+                "label": vid_relation.load_relation('first')[ins_list[i].predicate.split('_')[0]]
             }
 
 
