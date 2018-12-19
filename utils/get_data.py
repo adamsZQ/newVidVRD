@@ -1,5 +1,6 @@
 import json
 import os
+import pickle
 import numpy as np
 import VRDInstance
 from extract_features import extract_split_features
@@ -34,30 +35,48 @@ def get_frames(frames_path):
 
 
 def gen_vrd_instance(feature_type):
-    json_list = []
+    root_ins_path = '../data/VidVRD-features'
+
     vrd_list = []
     if feature_type == 'train':
-        json_list = get_train_data()
-    elif feature_type == 'test':
-        json_list = get_test_data()
+        ins_dir = os.path.join(root_ins_path, 'train_Instances')
 
-    for each_json in json_list:
-        video_id = each_json['video_id']
-        objs = {}
-        for each_obj in each_json['subject/objects']:
-            objs[each_obj['tid']] = each_obj['category']
-        for each_relation in each_json['relation_instances']:
-            # video_id, objects, begin_fid, end_fid, subject_tid, object_tid, predicate
-            vrd_ins = VRDInstance.VRDInstance(
-                video_id,
-                objs,
-                each_relation['begin_fid'],
-                each_relation['end_fid'],
-                each_relation['subject_tid'],
-                each_relation['object_tid'],
-                each_relation['predicate']
-            )
-            vrd_list.append(vrd_ins)
+    else:
+        ins_dir = os.path.join(root_ins_path, 'test_Instances')
+
+    if not os.path.exists(ins_dir):
+        os.makedirs(ins_dir)
+
+        if feature_type == 'train':
+            json_list = get_train_data()
+        else:
+            json_list = get_test_data()
+
+        for each_json in json_list:
+            video_id = each_json['video_id']
+            objs = {}
+            for each_obj in each_json['subject/objects']:
+                objs[each_obj['tid']] = each_obj['category']
+            for each_relation in each_json['relation_instances']:
+                # video_id, objects, begin_fid, end_fid, subject_tid, object_tid, predicate
+                vrd_ins = VRDInstance.VRDInstance(
+                    video_id,
+                    objs,
+                    each_relation['begin_fid'],
+                    each_relation['end_fid'],
+                    each_relation['subject_tid'],
+                    each_relation['object_tid'],
+                    each_relation['predicate']
+                )
+                vrd_list.append(vrd_ins)
+
+        with open(ins_dir + '/instances.pkl', 'wb+') as f:
+            pickle.dump(vrd_list, f)
+
+    else:
+        with open(ins_dir + '/instances.pkl', 'rb') as f:
+            vrd_list = pickle.load(f)
+
     return vrd_list
 
 
@@ -129,10 +148,7 @@ def gen_vrd_feature(output_dir='../data/VidVRD-features/separate_features'):
                 )
 
 
-def load_feature(file_path):
-    return np.load(file_path)
-
-
 if __name__ == '__main__':
-    get_vid_sep_dict()
-    gen_vrd_feature()
+    # get_vid_sep_dict()
+    # gen_vrd_feature()
+    print(gen_vrd_instance('train')[10].get_my_feature('train'))
