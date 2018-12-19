@@ -49,12 +49,13 @@ def store_relation_dict():
         second_file.write(str(second_dict))
 
 
-def load_relation(file_path):
+def load_relation(relation_type):
+    relation_type = '../data/' + relation_type + '_relation_dict.txt'
     s = ''
-    with open(file_path, 'r') as f:
+    with open(relation_type, 'r') as f:
         s += f.readline()
     return ast.literal_eval(s)
 
 
 if __name__ == '__main__':
-    print(len(load_relation('../data/first_relation_dict.txt')))
+    print(load_relation('first')['stop'])

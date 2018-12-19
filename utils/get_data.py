@@ -151,4 +151,4 @@ def gen_vrd_feature(output_dir='../data/VidVRD-features/separate_features'):
 if __name__ == '__main__':
     # get_vid_sep_dict()
     # gen_vrd_feature()
-    print(gen_vrd_instance('train')[10].get_my_feature('train'))
+    print(gen_vrd_instance('train')[10].predicate)
