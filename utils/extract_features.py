@@ -226,7 +226,24 @@ if __name__ == '__main__':
     parser.add_argument('-b', '--batch_size', default=32, type=int,
                         help="Number of frames to be processed each batch.")
 
+    parser.add_argument('-f', '--full', type=bool, default=False,
+                        help="Extract full frames features from video.")
+
+    parser.add_argument('-v', '--video', type=str, required=False,
+                        default='../data/VidVRD-videos/ILSVRC2015_train_00005015.mp4',
+                        help="The path of video")
+
+    parser.add_argument('-b', '--begin_fid', type=int, required=False,
+                        default=0,
+                        help="The begin id of frames")
+
+    parser.add_argument('-e', '--end_fid', type=int, required=False,
+                        default=30,
+                        help="The end id of frames")
     args = parser.parse_args()
 
-    extract_features(input_dir=args.input, output_dir=args.output,
-                     model_type=args.model, batch_size=args.batch_size)
+    if args.full:
+        extract_features(input_dir=args.input, output_dir=args.output,
+                         model_type=args.model, batch_size=args.batch_size)
+    else:
+        extract_split_features(args.video, args.output, args.begin_dif, args.end_fid,)
