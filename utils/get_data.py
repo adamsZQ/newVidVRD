@@ -2,6 +2,7 @@ import json
 import os
 import numpy as np
 import VRDInstance
+from extract_features import extract_split_features
 
 root_path = os.walk(r"../data")
 
@@ -32,11 +33,7 @@ def get_frames(frames_path):
     return frames_path_res
 
 
-def load_feature(file_path):
-    return np.load(file_path)
-
-
-def gen_feature(feature_type):
+def gen_vrd_instance(feature_type):
     json_list = []
     vrd_list = []
     if feature_type == 'train':
@@ -64,6 +61,78 @@ def gen_feature(feature_type):
     return vrd_list
 
 
+def get_vid_sep_dict():
+    train_video_list = []
+    test_video_list = []
+    train_each_video_dict = {}
+    test_each_video_dict = {}
+    file_path = '../data/VidVRD-features/separate_features/'
+    if not os.path.exists(file_path + 'train_list.json') or os.path.exists(file_path + 'test_list.json'):
+        for feature_type in ['train', 'test']:
+            vrd_list = gen_vrd_instance(feature_type)
+            if feature_type == 'train':
+                for each_vrd in vrd_list:
+                    if each_vrd.video_id not in train_video_list:
+                        train_video_list.append(each_vrd.video_id)
+                        train_each_video_dict[each_vrd.video_id] = []
+                        train_each_video_dict[each_vrd.video_id].append((each_vrd.begin_fid, each_vrd.end_fid))
+                    else:
+                        if (each_vrd.begin_fid, each_vrd.end_fid) not in train_each_video_dict[each_vrd.video_id]:
+                            train_each_video_dict[each_vrd.video_id].append((each_vrd.begin_fid, each_vrd.end_fid))
+                with open(file_path + 'train_list.json', 'w+') as train_f:
+                    train_f.write(str(train_each_video_dict))
+            else:
+                for each_vrd in vrd_list:
+                    if each_vrd.video_id not in test_video_list:
+                        test_video_list.append(each_vrd.video_id)
+                        test_each_video_dict[each_vrd.video_id] = []
+                        test_each_video_dict[each_vrd.video_id].append((each_vrd.begin_fid, each_vrd.end_fid))
+                    else:
+                        if (each_vrd.begin_fid, each_vrd.end_fid) not in test_each_video_dict[each_vrd.video_id]:
+                            test_each_video_dict[each_vrd.video_id].append((each_vrd.begin_fid, each_vrd.end_fid))
+                with open(file_path + 'test_list.json', 'w+') as test_f:
+                    test_f.write(str(test_each_video_dict))
+    else:
+        with open(file_path + 'train_list.json', 'r') as f:
+            train_each_video_dict = json.loads(f.read())
+        with open(file_path + 'test_list.json', 'r') as f:
+            test_each_video_dict = json.loads(f.read())
+    return train_each_video_dict, test_each_video_dict
+
+
+def gen_vrd_feature(output_dir='../data/VidVRD-features/separate_features'):
+    base_vid_path = '../data/VidVRD-videos/'
+
+    for feature_type in ['train', 'test']:
+        if feature_type == 'train':
+            video_dict, _ = get_vid_sep_dict()
+        else:
+            _, video_dict = get_vid_sep_dict()
+
+        output_dir = os.path.join(output_dir, feature_type)
+        for directory in [output_dir]:
+            if not os.path.exists(directory):
+                os.makedirs(directory)
+
+        for each_vrd_id in video_dict.keys():
+            # input_vid, output_dir, begin_fid, end_fid
+
+            print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n"
+                  + "now is extracting: " + each_vrd_id)
+            for (begin_fid, end_fid) in video_dict[each_vrd_id]:
+                print('( ' + str(begin_fid) + ', ' + str(end_fid) + ' )')
+                extract_split_features(
+                    base_vid_path + each_vrd_id + '.mp4',
+                    output_dir,
+                    begin_fid,
+                    end_fid
+                )
+
+
+def load_feature(file_path):
+    return np.load(file_path)
+
+
 if __name__ == '__main__':
-    for each in gen_feature('test'):
-        print(each.predicate)
+    get_vid_sep_dict()
+    gen_vrd_feature()

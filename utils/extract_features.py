@@ -38,7 +38,7 @@ def crop_center(im):
 def extract_split_features(input_vid, output_dir, begin_fid, end_fid, model_type='inceptionv3', batch_size=32):
     name, _ = os.path.splitext(input_vid)
     name = name.split('/')[-1]
-    output_dir = os.path.join(output_dir, 'vid_split_features', name)  # RGB features
+    output_dir = os.path.join(output_dir, name)  # RGB features
     # motion_dir = os.path.join(output_dir, 'motion') # Spatiotemporal features
     # opflow_dir = os.path.join(output_dir, 'opflow') # Optical flow features
 
@@ -102,7 +102,7 @@ def extract_split_features(input_vid, output_dir, begin_fid, end_fid, model_type
                                  + '_' + str(end_fid)
                                  + '.npy')
 
-    print(feat_filepath)
+    print("Save to: " + feat_filepath)
 
     with open(feat_filepath, 'wb') as f:
         np.save(f, features)
