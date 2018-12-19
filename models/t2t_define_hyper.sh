@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
-PROBLEM_NAME='sum_pooling'
-# this is your problem name, maybe is attention_gru, attention_gru_feature, etc..
-# Every problem's name is writen in every script's comments
-DATA_DIR='../train_data_sum'
-OUTPUT_DIR='../output_sum'
+USER_DIR='.'
+OUT_DIR='../data/VidVRD-t2t-data'
+TEP_DIR='../data/tmp_data'
+PROBLEM_NAME='text_class'    # text_class, frame_class, video_class'
+
+MODEL_NAME='transformer'    # transformer
+HPARAMS_SET='transformer_base'
