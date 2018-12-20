@@ -1,0 +1,78 @@
+├── data
+│   ├── first_relation_dict.txt
+│   ├── second_relation_dict.txt
+│   ├── test
+│   ├── tmp_data
+│   ├── train
+│   ├── traj_cls
+│   ├── traj_cls_gt
+│   ├── VidVRD-features
+│   │   ├── separate_features
+│   │   ├── test_Instances
+│   │   └── train_Instances
+│   └── VidVRD-videos
+├── __init__.py
+├── models
+│   ├── faster-rcnn
+│   │   ├── lib
+│   │   └── tools
+│   ├── frame_class.py
+│   ├── frame_text.py
+│   ├── ImgVRD
+│   │   ├── __init__.py
+│   │   ├── README.md
+│   │   ├── ST-GAN
+│   │   └── V-Trans-E
+│   ├── __init__.py
+│   ├── other-models
+│   │   ├── TRN
+│   │   ├── TSN
+│   │   └── two-stream
+│   ├── __pycache__
+│   │   ├── frame_class.cpython-36.pyc
+│   │   ├── frame_text.cpython-36.pyc
+│   │   ├── __init__.cpython-36.pyc
+│   │   ├── text_class.cpython-36.pyc
+│   │   └── video_class.cpython-36.pyc
+│   ├── README.md
+│   ├── t2t_datagen.sh
+│   ├── t2t_decoder.sh
+│   ├── t2t_define_hyper.sh
+│   ├── t2t_trainer.sh
+│   ├── text_class.py
+│   └── video_class.py
+├── README.md
+├── requirements.txt
+├── sim_baseline
+│   ├── baseline
+│   │   ├── association.py
+│   │   ├── feature.py
+│   │   ├── features
+│   │   ├── __init__.py
+│   │   ├── model.py
+│   │   ├── models
+│   │   ├── __pycache__
+│   │   └── trajectory.py
+│   ├── baseline.py
+│   ├── dataset.py
+│   ├── evaluation.py
+│   ├── __init__.py
+│   ├── __pycache__
+│   │   └── dataset.cpython-36.pyc
+│   └── README.md
+├── treeee.txt
+└── utils
+    ├── ext_features
+    ├── extract_features.py
+    ├── frames.py
+    ├── get_data.py
+    ├── get_relation_list.py
+    ├── __init__.py
+    ├── __pycache__
+    │   ├── extract_features.cpython-36.pyc
+    │   ├── frames.cpython-36.pyc
+    │   ├── get_data.cpython-36.pyc
+    │   ├── get_relation_list.cpython-36.pyc
+    │   └── VRDInstance.cpython-36.pyc
+    ├── README.md
+    └── VRDInstance.py
