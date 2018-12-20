@@ -33,6 +33,8 @@ Step 2: install tensor2tensor
 
 ### Python Package
 
+#### Download NUS-VidVRD Dataset
+
 Dataset:
 NUS-VidVRD: http://lms.comp.nus.edu.sg/research/VidVRD.html
 ```bash
@@ -43,6 +45,8 @@ sudo apt-get install build-essential cmake
 sudo apt-get install libgtk-3-dev
 sudo apt-get install libboost-all-dev
 ```
+
+#### Install all of requirements
 
 ```bash
 pip install -r requirements.txt
