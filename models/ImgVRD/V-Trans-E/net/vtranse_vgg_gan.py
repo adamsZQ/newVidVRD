@@ -5,6 +5,10 @@ from __future__ import print_function
 import numpy as np
 import tensorflow as tf
 import tensorflow.contrib.slim as slim
+
+import sys
+sys.path.append("models/ImgVRD/V-Trans-E")
+
 from model.ass_fun import *
 from model.config import cfg
 

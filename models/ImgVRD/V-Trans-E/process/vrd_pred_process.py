@@ -1,11 +1,14 @@
 # data for predicate detection
-import numpy as np 
-import xlwt
-import h5py
-import cv2
-from model.config import cfg 
-from model.ass_fun import *
 import json
+
+import cv2
+import numpy as np
+
+import sys
+sys.path.append("models/ImgVRD/V-Trans-E")
+
+from model.ass_fun import *
+from model.config import cfg
 
 N_each_pred = cfg.VRD_BATCH_NUM
 

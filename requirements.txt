@@ -24,4 +24,3 @@ xlwt
 easydict
 dlib
 git+https://github.com/cocodataset/cocoapi.git#subdirectory=PythonAPI
-

@@ -5,6 +5,10 @@ from __future__ import print_function
 import numpy as np
 import tensorflow as tf
 import tensorflow.contrib.slim as slim
+
+import sys
+sys.path.append("models/ImgVRD/V-Trans-E")
+
 from model.ass_fun import *
 from model.config import cfg
 
@@ -92,7 +96,8 @@ class VTranse(object):
 
     def crop_pool_layer(self, bottom, rois, name):
         """
-		Notice that the input rois is a N*4 matrix, and the coordinates of x,y should be original x,y times im_scale. 
+		Notice that the input rois is a N*4 matrix,
+		and the coordinates of x,y should be original x,y times im_scale.
 		"""
         with tf.variable_scope(name) as scope:
             n = tf.to_int32(rois.shape[0])

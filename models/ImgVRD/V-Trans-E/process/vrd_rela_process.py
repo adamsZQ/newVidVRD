@@ -1,6 +1,10 @@
 #data for relationship detection
 #need vrd_roidb.npz and vrd_detected_box.npz
-import numpy as np 
+import numpy as np
+
+import sys
+sys.path.append("models/ImgVRD/V-Trans-E")
+
 from model.config import cfg 
 from model.ass_fun import *
 

@@ -4,13 +4,16 @@ from __future__ import print_function
 
 from easydict import EasyDict as edict
 
+import sys
+sys.path.append("models/ImgVRD/V-Trans-E")
+
 __C = edict()
 
 cfg = __C
 
-__C.DIR = '/home/yangxu/project/rd/'
+__C.DIR = '/home/david/PycharmProjects/newVidVRD/rd/'
 
-__C.DIR2 = '/home/jhmei/yangxu/'
+__C.DIR2 = '/home/david/PycharmProjects/newVidVRD/'
 
 __C.POOLING_SIZE = 7
 

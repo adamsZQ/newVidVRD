@@ -1,3 +1,7 @@
+import sys
+
+sys.path.append("models/ImgVRD/V-Trans-E")
+
 from model.ass_fun import *
 from model.config import cfg
 

@@ -1,9 +1,14 @@
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
-import tensorflow as tf 
-import numpy as np 
-from model.config import cfg 
+import tensorflow as tf
+import numpy as np
+
+import sys
+
+sys.path.append("models/ImgVRD/V-Trans-E")
+
+from model.config import cfg
 from model.ass_fun import *
 from net.vtranse_vgg import VTranse
 
@@ -31,27 +36,27 @@ print('data loaded')
 saver = tf.train.Saver()
 
 with tf.Session() as sess:
-	init = tf.global_variables_initializer()
-	sess.run(init)
-	saver.restore(sess, model_path)
-	pred_roidb = []
-	for roidb_id in range(N_test):
-		if (roidb_id+1)%100 == 0:
-			print(roidb_id + 1)
-		roidb_use = test_roidb[roidb_id]
-		if len(roidb_use['rela_gt']) == 0:
-			pred_roidb.append({})
-			continue
-		pred_rela, pred_rela_score = vnet.test_rela(sess, roidb_use)
-		sub_score = roidb_use['sub_score']
-		obj_score = roidb_use['obj_score']
-		for ii in range(len(pred_rela_score)):
-			pred_rela_score[ii] = pred_rela_score[ii]*sub_score[ii]*obj_score[ii]
-		pred_roidb_temp = {'pred_rela': pred_rela, 'pred_rela_score': pred_rela_score,
-							'sub_box_dete': roidb_use['sub_box_dete'], 'obj_box_dete': roidb_use['obj_box_dete'],
-							'sub_dete': roidb_use['sub_dete'], 'obj_dete': roidb_use['obj_dete']}
-		pred_roidb.append(pred_roidb_temp)
-		
+    init = tf.global_variables_initializer()
+    sess.run(init)
+    saver.restore(sess, model_path)
+    pred_roidb = []
+    for roidb_id in range(N_test):
+        if (roidb_id + 1) % 100 == 0:
+            print(roidb_id + 1)
+        roidb_use = test_roidb[roidb_id]
+        if len(roidb_use['rela_gt']) == 0:
+            pred_roidb.append({})
+            continue
+        pred_rela, pred_rela_score = vnet.test_rela(sess, roidb_use)
+        sub_score = roidb_use['sub_score']
+        obj_score = roidb_use['obj_score']
+        for ii in range(len(pred_rela_score)):
+            pred_rela_score[ii] = pred_rela_score[ii] * sub_score[ii] * obj_score[ii]
+        pred_roidb_temp = {'pred_rela': pred_rela, 'pred_rela_score': pred_rela_score,
+                           'sub_box_dete': roidb_use['sub_box_dete'], 'obj_box_dete': roidb_use['obj_box_dete'],
+                           'sub_dete': roidb_use['sub_dete'], 'obj_dete': roidb_use['obj_dete']}
+        pred_roidb.append(pred_roidb_temp)
+
 roidb = {}
 roidb['pred_roidb'] = pred_roidb
 np.savez(save_path, roidb=roidb)

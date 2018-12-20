@@ -1,5 +1,9 @@
 import cv2
 import numpy as np
+
+import sys
+sys.path.append("models/ImgVRD/V-Trans-E")
+
 from model.config import cfg
 
 
@@ -125,7 +129,7 @@ def im_preprocess(image_path):
     return im_use, im_scale
 
 
-def get_blob_pred(roidb_use, im_scale, index_sp, N_each_batch, batch_id):
+def get_blob_pred(roidb_use, im_scale, N_each_batch, batch_id):
     blob = {}
     sub_box = roidb_use['sub_box_gt'] * im_scale
     obj_box = roidb_use['obj_box_gt'] * im_scale
@@ -143,7 +147,7 @@ def get_blob_pred(roidb_use, im_scale, index_sp, N_each_batch, batch_id):
     return blob
 
 
-def get_blob_rela(roidb_use, im_scale, index_sp, N_each_batch, batch_id):
+def get_blob_rela(roidb_use, im_scale, N_each_batch, batch_id):
     blob = {}
     sub_box = roidb_use['sub_box_dete'] * im_scale
     obj_box = roidb_use['obj_box_dete'] * im_scale

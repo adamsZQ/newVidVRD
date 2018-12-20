@@ -1,7 +1,11 @@
 #data for relationship detection
 #need vg_roidb.npz and vg_detected_box.npz
-import numpy as np 
-from model.config import cfg 
+import numpy as np
+
+import sys
+sys.path.append("models/ImgVRD/V-Trans-E")
+
+from model.config import cfg
 from model.ass_fun import *
 
 N_each_batch = cfg.VG_BATCH_NUM_RELA

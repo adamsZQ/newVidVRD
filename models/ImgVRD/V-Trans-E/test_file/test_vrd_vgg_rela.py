@@ -3,6 +3,11 @@ from __future__ import division
 from __future__ import print_function
 import tensorflow as tf
 import numpy as np
+
+import sys
+
+sys.path.append("models/ImgVRD/V-Trans-E")
+
 from model.config import cfg
 from model.ass_fun import *
 from net.vtranse_vgg import VTranse

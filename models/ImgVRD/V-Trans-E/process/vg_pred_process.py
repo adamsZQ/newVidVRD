@@ -1,6 +1,10 @@
 import cv2
 import h5py
 import numpy as np
+
+import sys
+sys.path.append("models/ImgVRD/V-Trans-E")
+
 from model.ass_fun import *
 from model.config import cfg
 
@@ -49,9 +53,7 @@ for r in range(2):
         train_roidb = roidb
     elif r == 1:
         test_roidb = roidb
-roidb = {}
 
-roidb['train_roidb'] = train_roidb
-roidb['test_roidb'] = test_roidb
+roidb = {'train_roidb': train_roidb, 'test_roidb': test_roidb}
 
 np.savez(save_path, roidb=roidb)

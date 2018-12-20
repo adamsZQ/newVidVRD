@@ -1,26 +1,3 @@
-# vtranse/STA Tensorflow
-visual translation embedding network for visual relation detection, CVPR 2017, tensorflow
-
-Shuffle-Then-Assemble: Learning Object-Agnostic Visual Relationship Features, ECCV, tensorflow
-
-# Installation
-1. Install ipython, if you do not have ipython, you can install this tool (strongly recommended: https://ipython.org/install.html)
-```bash
-pip install ipython
-```
-2. Install TensorFlow v1.3.0 or newer type.
-```bash
-pip install tensorflow-gpu==1.3.0
-```
-3.Download this repository or clone with Git
-```bash
-git clone https://github.com/yangxuntu/vtranse.git
-```
-
-3. Install easydict
-```bash
-pip install easydict
-```
 # Training and Testing Vtranse
 ## 1. Download dataset (VRD dataset is used as example)
 a). Download the dataset form https://share.weiyun.com/55KK78Y, and the file is named as 'sg_dataset.zip'. 
