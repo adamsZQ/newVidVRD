@@ -20,6 +20,8 @@ imageio
 git+git://github.com/pytorch/text
 keras
 tqdm
+xlwt
+easydict
 dlib
 git+https://github.com/cocodataset/cocoapi.git#subdirectory=PythonAPI
 
