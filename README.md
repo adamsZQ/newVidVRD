@@ -3,7 +3,7 @@
 
 ### Mainly Structure
 
-The graph will be upload soon.
+![Main Structure of model](https://github.com/Daviddddl/newVidVRD/blob/master/imgs/main_structure.png)
 
 ### Environment
 
