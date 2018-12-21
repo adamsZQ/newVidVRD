@@ -88,11 +88,11 @@ We extracted frames features from several types of neural networks:
 
 | network | download_link |
 | ------- | ------------- |
-| inceptionv3 | --- |
-| xception | --- |
-| resnet50 | --- |
-| vgg16 | --- |
-| vgg19 | --- |
+| inceptionv3 | uploading |
+| xception | uploading |
+| resnet50 | uploading |
+| vgg16 | uploading |
+| vgg19 | uploading |
 
 ### Generate encoding data for tensor2tensor
 
