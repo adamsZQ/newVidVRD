@@ -5,6 +5,10 @@ DECODE_TO='../decode_out_truth/sum_pooling_out.txt'
 
 DECODE_HPARAMS="beam_size=5,alpha=0.6"
 
+echo "You are going to decode $PROBLEM_NAME right now!"
+echo "The data to be decoded is $DECODE_FROM"
+echo "The result will be kept in $DECODE_TO"
+
 t2t-decoder \
     --t2t_usr_dir=. \
     --problem=$PROBLEM_NAME \

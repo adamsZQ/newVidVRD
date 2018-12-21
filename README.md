@@ -94,14 +94,26 @@ We extracted frames features from several types of neural networks:
 | vgg16 | --- |
 | vgg19 | --- |
 
+### Generate encoding data for tensor2tensor
 
+Modify the 'models/t2t_datagen.sh', declare the 'OUT_DIR' and 'TEP_DIR', then run the shell script as following.
+```bash
+cd models && bash t2t_datagen.sh # [frame_class|frame_text|text_class|video_class]
+```
 
-| script | encoder | decoder |
-| ------ | ------- | ------- |
-| my_img_trans | Self-Attention, Feed-forward | Self-Attention, Source-Target-Attention, Feed-forward |
-| my_img_trans_2d | Self-Attention, Feed-forward | Self-Attention, Source-Target-Attention, Feed-forward |
-| my_lstm | lstm | lstm |
-| my_mtf_img_trans | Modulation Transfer Function | Modulation Transfer Function |
+### Train the model
+
+Similarly, modify the 'models/t2t_trainer.sh' and run the shell.
+```bash
+cd models && bash t2t_trainer.sh frame_class transformer
+```
+
+###  Decode the test data
+
+Modify and run the 'models/t2t_decoder.sh' to test.
+```bash
+cd models && bash t2t_decoder.sh
+```
 
 
 ### Mainly structure of this project
