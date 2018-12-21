@@ -115,8 +115,20 @@ Modify and run the 'models/t2t_decoder.sh' to test.
 cd models && bash t2t_decoder.sh
 ```
 
+### Results
 
-### Mainly structure of this project
+|               |  predicate    | phrase        | relation    |
+| ------------- |:-------------:| -------------:| -----------:|
+| VRD (R100)        | Coming soon | Coming soon | Coming soon |
+| VG (R100)         | Coming soon | Coming soon | Coming soon |
+| VG (R100)         | Coming soon | Coming soon | Coming soon |
+| Sth-Sth V1        | Coming soon | Coming soon | Coming soon |
+| Sth-Sth V2        | Coming soon | Coming soon | Coming soon |
+| NUS-VVRD-V1 (1k)  | Coming soon | Coming soon | Coming soon |
+| NUS-VVRD-V2 (10k) | Coming soon | Coming soon | Coming soon |
+
+
+### Mainly directory structure of this project
 
 Because of the number of Video and Image Dataset have tons of files, the detail of data omit some less vital parts.
 ```
