@@ -9,7 +9,6 @@
 
 Tensorflow1.8 + CUDA9.0 + python3.6 + Tensor2tensor
 
-Step 1: 
   
   download and install Anaconda 
   https://www.anaconda.com/download/#linux
@@ -31,7 +30,7 @@ pip install --upgrade pip
 (tensorflow)$ pip install --ignore-installed --upgrade https://download.tensorflow.google.cn/linux/gpu/tensorflow_gpu-1.8.0-cp36-cp36m-linux_x86_64.whl
 ```
 
-Step 2: install tensor2tensor
+install tensor2tensor
 ```
 (tensorflow)$ pip install tensor2tensor
 ```
