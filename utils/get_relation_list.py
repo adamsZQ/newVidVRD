@@ -1,6 +1,8 @@
 import os
 import json
 import ast
+import get_data
+import sys
 
 
 def gen_relations():
@@ -49,6 +51,40 @@ def store_relation_dict():
         second_file.write(str(second_dict))
 
 
+def get_vvrd_truth_list(data_type, relation_type):
+    pos = 0 if relation_type == 'first' else 1
+
+    file_path = '../data/vvrd_truth_' + data_type + '_' + relation_type + '_list.json'
+    vrd_json = {}
+    with open(file_path, 'w+') as f:
+        for each_vrd in get_data.gen_vrd_instance(data_type):
+            if pos == 1:
+                if len(each_vrd.predicate.split('_')) > 1:
+                    rel = load_relation(relation_type)[each_vrd.predicate.split('_')[pos]]
+                else:
+                    rel = -1
+            else:
+                rel = load_relation(relation_type)[each_vrd.predicate.split('_')[pos]]
+            vrd_json[each_vrd.video_id + '_'
+                     + str(each_vrd.begin_fid) + '_'
+                     + str(each_vrd.end_fid)] = rel
+            # each_vrd_json = {each_vrd.video_id + '_'
+            #                  + str(each_vrd.begin_fid) + '_'
+            #                  + str(each_vrd.end_fid): rel}
+        f.write(json.dumps(vrd_json))
+    return 'Successfully get VVRD Truth List: ' + file_path
+
+
+def get_vvrd_truth(data_type, relation_type, video_id, begin_fid, end_fid):
+    # datatype: ['train', 'test']
+    # relation_type: ['first', 'second']
+    vvrd_truth_list_base_path = '../data/vvrd_truth_' + data_type + '_' + relation_type + '_list.json'
+    print(vvrd_truth_list_base_path)
+    with open(vvrd_truth_list_base_path, 'r') as f:
+        vvrd_truth_list = json.loads(f.read())
+    return vvrd_truth_list[video_id + '_' + str(begin_fid) + '_' + str(end_fid)]
+
+
 def load_relation(relation_type):
     relation_type = '../data/' + relation_type + '_relation_dict.txt'
     s = ''
@@ -58,4 +94,8 @@ def load_relation(relation_type):
 
 
 if __name__ == '__main__':
-    print(load_relation('first')['stop'])
+    for rel_type in ['first', 'second']:
+        for train_type in ['train', 'test']:
+            get_vvrd_truth_list(train_type, rel_type)
+    # vrd_ins = get_data.gen_vrd_instance('train')[1]
+    # print(get_vvrd_truth('train', 'first', vrd_ins.video_id, vrd_ins.begin_fid, vrd_ins.end_fid))
