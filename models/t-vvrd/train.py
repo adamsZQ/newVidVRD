@@ -7,7 +7,7 @@ from modules import *
 from tqdm import tqdm
 
 
-class Graph():
+class Graph:
     def __init__(self, is_training=True):
         self.graph = tf.Graph()
         with self.graph.as_default():

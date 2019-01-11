@@ -6,8 +6,8 @@ def normalize(inputs,
               epsilon=1e-8,
               scope="ln",
               reuse=None):
-    '''Applies layer normalization.
-    
+    """Applies layer normalization.
+
     Args:
       inputs: A tensor with 2 or more dimensions, where the first dimension has
         `batch_size`.
@@ -15,10 +15,10 @@ def normalize(inputs,
       scope: Optional scope for `variable_scope`.
       reuse: Boolean, whether to reuse the weights of a previous layer
         by the same name.
-      
+
     Returns:
       A tensor with the same shape and data dtype as `inputs`.
-    '''
+    """
     with tf.variable_scope(scope, reuse=reuse):
         inputs_shape = inputs.get_shape()
         params_shape = inputs_shape[-1:]
@@ -39,7 +39,7 @@ def embedding(inputs,
               scale=True,
               scope="embedding",
               reuse=None):
-    '''Embeds a given tensor.
+    """Embeds a given tensor.
 
     Args:
       inputs: A `Tensor` with type `int32` or `int64` containing the ids
@@ -56,12 +56,12 @@ def embedding(inputs,
     Returns:
       A `Tensor` with one more rank than inputs's. The last dimensionality
         should be `num_units`.
-        
+
     For example,
-    
+
     ```
     import tensorflow as tf
-    
+
     inputs = tf.to_int32(tf.reshape(tf.range(2*3), (2, 3)))
     outputs = embedding(inputs, 6, 2, zero_pad=True)
     with tf.Session() as sess:
@@ -76,10 +76,10 @@ def embedding(inputs,
       [ 0.7521342   0.38203377]
       [-0.04973143 -0.06210355]]]
     ```
-    
+    haixng
     ```
     import tensorflow as tf
-    
+
     inputs = tf.to_int32(tf.reshape(tf.range(2*3), (2, 3)))
     outputs = embedding(inputs, 6, 2, zero_pad=False)
     with tf.Session() as sess:
@@ -92,9 +92,9 @@ def embedding(inputs,
 
      [[-0.11634696 -0.35983452]
       [ 0.50208133  0.53509563]
-      [ 1.22204471 -0.96587461]]]    
-    ```    
-    '''
+      [ 1.22204471 -0.96587461]]]
+    ```
+    """
     with tf.variable_scope(scope, reuse=reuse):
         lookup_table = tf.get_variable('lookup_table',
                                        dtype=tf.float32,
@@ -117,7 +117,7 @@ def positional_encoding(inputs,
                         scale=True,
                         scope="positional_encoding",
                         reuse=None):
-    '''Sinusoidal Positional_Encoding.
+    """Sinusoidal Positional_Encoding.
 
     Args:
       inputs: A 2d Tensor with shape of (N, T).
@@ -130,7 +130,7 @@ def positional_encoding(inputs,
 
     Returns:
         A 'Tensor' with one more rank than inputs's, with the dimensionality should be 'num_units'
-    '''
+    """
 
     N, T = inputs.get_shape().as_list()
     with tf.variable_scope(scope, reuse=reuse):
@@ -168,23 +168,23 @@ def multihead_attention(queries,
                         causality=False,
                         scope="multihead_attention",
                         reuse=None):
-    '''Applies multihead attention.
-    
+    """Applies multihead attention.
+
     Args:
       queries: A 3d tensor with shape of [N, T_q, C_q].
       keys: A 3d tensor with shape of [N, T_k, C_k].
       num_units: A scalar. Attention size.
       dropout_rate: A floating point number.
       is_training: Boolean. Controller of mechanism for dropout.
-      causality: Boolean. If true, units that reference the future are masked. 
+      causality: Boolean. If true, units that reference the future are masked.
       num_heads: An int. Number of heads.
       scope: Optional scope for `variable_scope`.
       reuse: Boolean, whether to reuse the weights of a previous layer
         by the same name.
-        
+
     Returns
-      A 3d tensor with shape of (N, T_q, C)  
-    '''
+      A 3d tensor with shape of (N, T_q, C)
+    """
     with tf.variable_scope(scope, reuse=reuse):
         # Set the fall back option for num_units
         if num_units is None:
@@ -254,18 +254,18 @@ def feedforward(inputs,
                 num_units=[2048, 512],
                 scope="multihead_attention",
                 reuse=None):
-    '''Point-wise feed forward net.
-    
+    """Point-wise feed forward net.
+
     Args:
       inputs: A 3d tensor with shape of [N, T, C].
       num_units: A list of two integers.
       scope: Optional scope for `variable_scope`.
       reuse: Boolean, whether to reuse the weights of a previous layer
         by the same name.
-        
+
     Returns:
       A 3d tensor with the same shape and dtype as inputs
-    '''
+    """
     with tf.variable_scope(scope, reuse=reuse):
         # Inner layer
         params = {"inputs": inputs, "filters": num_units[0], "kernel_size": 1,
@@ -287,29 +287,29 @@ def feedforward(inputs,
 
 
 def label_smoothing(inputs, epsilon=0.1):
-    '''Applies label smoothing. See https://arxiv.org/abs/1512.00567.
-    
+    """Applies label smoothing. See https://arxiv.org/abs/1512.00567.
+
     Args:
       inputs: A 3d tensor with shape of [N, T, V], where V is the number of vocabulary.
       epsilon: Smoothing rate.
-    
+
     For example,
-    
+
     ```
     import tensorflow as tf
-    inputs = tf.convert_to_tensor([[[0, 0, 1], 
+    inputs = tf.convert_to_tensor([[[0, 0, 1],
        [0, 1, 0],
        [1, 0, 0]],
 
       [[1, 0, 0],
        [1, 0, 0],
        [0, 1, 0]]], tf.float32)
-       
+
     outputs = label_smoothing(inputs)
-    
+
     with tf.Session() as sess:
         print(sess.run([outputs]))
-    
+
     >>
     [array([[[ 0.03333334,  0.03333334,  0.93333334],
         [ 0.03333334,  0.93333334,  0.03333334],
@@ -317,8 +317,8 @@ def label_smoothing(inputs, epsilon=0.1):
 
        [[ 0.93333334,  0.03333334,  0.03333334],
         [ 0.93333334,  0.03333334,  0.03333334],
-        [ 0.03333334,  0.93333334,  0.03333334]]], dtype=float32)]   
-    ```    
-    '''
+        [ 0.03333334,  0.93333334,  0.03333334]]], dtype=float32)]
+    ```
+    """
     K = inputs.get_shape().as_list()[-1]  # number of channels
     return ((1 - epsilon) * inputs) + (epsilon / K)
