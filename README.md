@@ -120,11 +120,7 @@ cd models && bash t2t_decoder.sh
 | ------------- |:-------------:| -------------:| -----------:|
 | VRD (R100)        | Coming soon | Coming soon | Coming soon |
 | VG (R100)         | Coming soon | Coming soon | Coming soon |
-| VG (R100)         | Coming soon | Coming soon | Coming soon |
-| Sth-Sth V1        | Coming soon | Coming soon | Coming soon |
-| Sth-Sth V2        | Coming soon | Coming soon | Coming soon |
-| NUS-VVRD-V1 (1k)  | Coming soon | Coming soon | Coming soon |
-| NUS-VVRD-V2 (10k) | Coming soon | Coming soon | Coming soon |
+| VidVRD-1k | Coming soon | Coming soon | Coming soon |
 
 
 ### Mainly directory structure of this project
