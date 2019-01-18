@@ -81,9 +81,5 @@ def render_frames(frames, prediction):
 
 
 if __name__ == '__main__':
-    ext_features.extract_split_features(
-        '../data/VidVRD-videos/ILSVRC2015_train_00008004.mp4',
-        '../data/VidVRD-features/',
-        180,
-        185,
-    )
+    path = extract_all_frames('sample6.mp4')
+    print(path)

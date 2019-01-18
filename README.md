@@ -3,7 +3,7 @@
 
 ### Mainly Structure
 
-![Main Structure of model](https://github.com/Daviddddl/newVidVRD/blob/master/imgs/main_structure.png)
+![Main Structure of model](https://github.com/Daviddddl/newVidVRD/blob/master/imgs/MainNetwork.jpg)
 
 ### Environment
 
