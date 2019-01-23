@@ -149,12 +149,18 @@ if __name__ == '__main__':
     # vord_ins = gen_vord_instance('/home/david/PycharmProjects/VVRD_Dataset10k/10kDataSet/nus-vord/2018-12-22/3094323180.json')
     # print(include_object(vord_ins, 'BabY'))
 
-    for path in ['json_list_result_train_data.pkl',
-                 'json_list_result_test_data.pkl',
-                 'json_list_result_val_data.pkl']:
-        count = 0
-        instances_list = get_vord_instance(path)
-        for ins in instances_list:
-            if include_object(ins, 'dog'):
-                count += 1
-        print(path + ": " + str(count))
+    # for path in ['json_list_result_train_data.pkl',
+    #              'json_list_result_test_data.pkl',
+    #              'json_list_result_val_data.pkl']:
+    #     count = 0
+    #     instances_list = get_vord_instance(path)
+    #     for ins in instances_list:
+    #         if include_object(ins, 'dog'):
+    #             count += 1
+    #     print(path + ": " + str(count))
+
+    f = open('dog_val.txt', 'w+')
+    for ins in get_vord_instance('json_list_result_val_data.pkl'):
+        if include_object(ins, 'dog'):
+            f.write(ins.video_path + '\n')
+    f.close()
