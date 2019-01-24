@@ -127,14 +127,7 @@ def get_vord_instance(ins_path, get_instances=True, video_id=0):
         return None
 
 
-def include_object(ins, object):
-    for each_so in ins.subject_objects:
-        if each_so['category'].lower() == object.lower():
-            return True
-    return False
-
-
-if __name__ == '__main__':
+# if __name__ == '__main__':
     # vord_ins = gen_vord_instance('/home/david/PycharmProjects/VVRD_Dataset10k/10kDataSet/nus-vord/2018-12-25
     # /6323697951.json')
     # print(vord_ins)
@@ -159,8 +152,9 @@ if __name__ == '__main__':
     #             count += 1
     #     print(path + ": " + str(count))
 
-    f = open('dog_val.txt', 'w+')
-    for ins in get_vord_instance('json_list_result_val_data.pkl'):
-        if include_object(ins, 'dog'):
-            f.write(ins.video_path + '\n')
-    f.close()
+    # f = open('dog_val.txt', 'w+')
+    # for ins in get_vord_instance('json_list_result_val_data.pkl'):
+    #     if ins.include_object('dog'):
+    #         print("I have dog")
+    #         f.write(ins.video_path + '\n')
+    # f.close()

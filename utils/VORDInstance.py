@@ -16,3 +16,21 @@ class VORDInstance:
     def __repr__(self):
         return "VORD Instance: video_id=" + str(self.video_id)
 
+    def include_object(self, object):
+        for each_so in self.subject_objects:
+            if each_so['category'].lower() == object.lower():
+                return True
+        return False
+
+    def get_object_relations_list(self):
+        objects_list = []
+        relations_list = []
+        for each_so in self.subject_objects:
+            objects_list.append(each_so['category'])
+
+        for each_rel in self.relation_instances:
+            relations_list.append(each_rel['predicate'])
+        # print("Video " + str(self.video_id) + " has "
+        #       + str(len(objects_list)) + " objects and " +
+        #       str(len(relations_list)) + " relations.")
+        return objects_list, relations_list
