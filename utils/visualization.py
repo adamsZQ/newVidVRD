@@ -57,7 +57,7 @@ def statistic_visualization(label_list, num_list, title=None, bar_type=0):
     fontsize = 20
     plt.figure(figsize=(40, 15))
     if bar_type == 0:
-        plt.bar(range(len(label_list)), num_list, color='b', tick_label=label_list)
+        plt.bar(range(len(label_list)), num_list, color='#FAA460', tick_label=label_list)  # sandybrown
         plt.yscale('log')
         plt.tick_params(axis='y', labelsize=20)
         plt.ylabel('Per Class Data Size', fontsize=fontsize)
@@ -74,14 +74,47 @@ def statistic_visualization(label_list, num_list, title=None, bar_type=0):
     plt.show()
 
 
+def statistic_visualization_pro_4_rela(label_list, num_list,
+                                       highlight=True, title=None):
+    fontsize = 20
+    plt.figure(figsize=(40, 15))
+
+    if highlight:
+        colors = []
+        highlight_list = ['next_to', 'in_front_of', 'above', 'beneath', 'behind', 'away', 'towards', 'inside']
+        for each_label in label_list:
+            if each_label in highlight_list:
+                colors.append('#87CEFA')   # lightskyblue
+            else:
+                colors.append('#FFA07A')   # lightsalmon
+        plt.bar(range(len(label_list)), num_list, color=colors, tick_label=label_list)
+    else:
+        print("No highlight???")
+
+    plt.yscale('log')
+    plt.tick_params(axis='y', labelsize=20)
+    plt.ylabel('Per Class Data Size', fontsize=fontsize)
+    plt.xticks(rotation=90, fontsize=fontsize)
+    plt.gca().yaxis.grid(True)
+    # plt.title(title, fontsize=fontsize*1.5)
+    plt.axis('tight')
+    plt.xlim([-1, len(label_list)])
+    plt.savefig("{}.jpg".format(title), dpi=400)
+    plt.show()
+
+
 def get_dataset_visualizations():
     for data_type in ['train', 'test']:
         a, b, c, d = get_objects_relations_list(data_type)
-        statistic_visualization(a, b, data_type + '_objects_0')
+        statistic_visualization(a, b, data_type + '_objects')
         # statistic_visualization(a, b, data_type + '_objects_1', 1)
-        statistic_visualization(c, d, data_type + '_relations_0')
+        statistic_visualization_pro_4_rela(c, d, title=data_type + '_relations')
         # statistic_visualization(c, d, data_type + '_relations_1', 1)
 
 
 if __name__ == '__main__':
     get_dataset_visualizations()
+    # a, b, c, d = get_objects_relations_list('test')
+    # statistic_visualization(a, b)
+    # statistic_visualization_pro_4_rela(c, d)
+
