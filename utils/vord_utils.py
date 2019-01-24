@@ -127,10 +127,11 @@ def get_vord_instance(ins_path, get_instances=True, video_id=0):
         return None
 
 
-# if __name__ == '__main__':
-    # vord_ins = gen_vord_instance('/home/david/PycharmProjects/VVRD_Dataset10k/10kDataSet/nus-vord/2018-12-25
-    # /6323697951.json')
-    # print(vord_ins)
+if __name__ == '__main__':
+    vord_ins = gen_vord_instance('/home/david/PycharmProjects/VVRD_Dataset10k/10kDataSet/nus-vord/2018-12-15/10389824704.json')
+    a, b = vord_ins.get_object_relations_list()
+    print(str(a))
+    print(str(b))
     # print(len(get_json_list(data_type='train', load_from_save=True, load_from_path='json_list_result_train_data.pkl'))) # 7000
     # void_ins = get_vord_instance(ins_path='json_list_result_train_data.pkl', get_instances=False, video_id=2893074134)
     # print(void_ins)
