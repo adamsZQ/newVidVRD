@@ -22,6 +22,20 @@ class VORDInstance:
                 return True
         return False
 
+    def get_object_trajs(self, object_label):
+        if self.include_object(object_label):
+            trajs_list = []
+            for each_so in self.subject_objects:
+                if object_label == each_so['category']:
+                    obj_tid = each_so['tid']
+                    for each_traj in self.trajectories:
+                        for each_traj_obj in each_traj:
+                            if obj_tid == each_traj_obj['tid']:
+                                trajs_list.append(each_traj_obj)
+            return trajs_list
+        else:
+            return None
+
     def get_object_relations_list(self):
         objects_list = []
         relations_list = []

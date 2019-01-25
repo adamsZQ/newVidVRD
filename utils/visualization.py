@@ -113,8 +113,12 @@ def get_dataset_visualizations():
 
 
 if __name__ == '__main__':
-    get_dataset_visualizations()
+    # get_dataset_visualizations()
     # a, b, c, d = get_objects_relations_list('test')
     # statistic_visualization(a, b)
     # statistic_visualization_pro_4_rela(c, d)
+    for each_type in ['train', 'test']:
+        a, b, c, d = get_objects_relations_list(each_type)
+        print(a)
+        print(len(a))
 
