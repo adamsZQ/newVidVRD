@@ -15,6 +15,7 @@ from opts import parser
 
 best_prec1 = 0
 
+
 def main():
     global args, best_prec1
     args = parser.parse_args()
@@ -26,7 +27,7 @@ def main():
     elif args.dataset == 'kinetics':
         num_class = 400
     else:
-        raise ValueError('Unknown dataset '+args.dataset)
+        raise ValueError('Unknown dataset ' + args.dataset)
 
     i3d_model = I3DModel(num_class, args.sample_frames, args.modality,
                          base_model=args.arch, dropout=args.dropout)
@@ -38,7 +39,7 @@ def main():
             best_prec1 = checkpoint['best_prec1']
             i3d_model.load_state_dict(checkpoint['state_dict'])
             print(("=> loaded checkpoint '{}' (epoch {})"
-                  .format(args.evaluate, checkpoint['epoch'])))
+                   .format(args.evaluate, checkpoint['epoch'])))
         else:
             print(("=> no checkpoint found at '{}'".format(args.resume)))
 
@@ -57,7 +58,8 @@ def main():
         I3DDataSet("", args.train_list,
                    sample_frames=args.sample_frames,
                    modality=args.modality,
-                   image_tmpl="image_{:05d}.jpg" if args.modality in ["RGB", "RGBDiff"] else args.flow_prefix+"{}_{:05d}.jpg",
+                   image_tmpl="image_{:05d}.jpg" if args.modality in ["RGB",
+                                                                      "RGBDiff"] else args.flow_prefix + "{}_{:05d}.jpg",
                    transform=torchvision.transforms.Compose([
                        train_augmentation,
                        Stack(),
@@ -68,10 +70,11 @@ def main():
         num_workers=args.workers, pin_memory=True)
 
     val_loader = torch.utils.data.DataLoader(
-       I3DDataSet("", args.val_list,
+        I3DDataSet("", args.val_list,
                    sample_frames=args.sample_frames,
                    modality=args.modality,
-                   image_tmpl="image_{:05d}.jpg" if args.modality in ["RGB", "RGBDiff"] else args.flow_prefix+"{}_{:05d}.jpg",
+                   image_tmpl="image_{:05d}.jpg" if args.modality in ["RGB",
+                                                                      "RGBDiff"] else args.flow_prefix + "{}_{:05d}.jpg",
                    transform=torchvision.transforms.Compose([
                        val_trans,
                        Stack(),
@@ -96,7 +99,7 @@ def main():
                                 weight_decay=args.weight_decay)
 
     if args.evaluate:
-        validate(val_loader,i3d_model, criterion, 0)
+        validate(val_loader, i3d_model, criterion, 0)
         return
 
     for epoch in range(args.start_epoch, args.epochs):
@@ -144,11 +147,10 @@ def train(train_loader, model, criterion, optimizer, epoch):
         loss = criterion(output, target_var)
 
         # measure accuracy and record loss
-        prec1, prec5 = accuracy(output.data, target, topk=(1,5))
+        prec1, prec5 = accuracy(output.data, target, topk=(1, 5))
         losses.update(loss.data[0], input.size(0))
         top1.update(prec1[0], input.size(0))
         top5.update(prec5[0], input.size(0))
-
 
         # compute gradient and do SGD step
         optimizer.zero_grad()
@@ -168,13 +170,13 @@ def train(train_loader, model, criterion, optimizer, epoch):
 
         if i % args.print_freq == 0:
             print(('Epoch: [{0}][{1}/{2}], lr: {lr:.5f}\t'
-                  'Time {batch_time.val:.3f} ({batch_time.avg:.3f})\t'
-                  'Data {data_time.val:.3f} ({data_time.avg:.3f})\t'
-                  'Loss {loss.val:.4f} ({loss.avg:.4f})\t'
-                  'Prec@1 {top1.val:.3f} ({top1.avg:.3f})\t'
-                  'Prec@5 {top5.val:.3f} ({top5.avg:.3f})'.format(
-                   epoch, i, len(train_loader), batch_time=batch_time,
-                   data_time=data_time, loss=losses, top1=top1, top5=top5, lr=optimizer.param_groups[-1]['lr'])))
+                   'Time {batch_time.val:.3f} ({batch_time.avg:.3f})\t'
+                   'Data {data_time.val:.3f} ({data_time.avg:.3f})\t'
+                   'Loss {loss.val:.4f} ({loss.avg:.4f})\t'
+                   'Prec@1 {top1.val:.3f} ({top1.avg:.3f})\t'
+                   'Prec@5 {top5.val:.3f} ({top5.avg:.3f})'.format(
+                epoch, i, len(train_loader), batch_time=batch_time,
+                data_time=data_time, loss=losses, top1=top1, top5=top5, lr=optimizer.param_groups[-1]['lr'])))
 
 
 def validate(val_loader, model, criterion, iter, logger=None):
@@ -197,7 +199,7 @@ def validate(val_loader, model, criterion, iter, logger=None):
         loss = criterion(output, target_var)
 
         # measure accuracy and record loss
-        prec1, prec5 = accuracy(output.data, target, topk=(1,5))
+        prec1, prec5 = accuracy(output.data, target, topk=(1, 5))
 
         losses.update(loss.data[0], input.size(0))
         top1.update(prec1[0], input.size(0))
@@ -209,15 +211,15 @@ def validate(val_loader, model, criterion, iter, logger=None):
 
         if i % args.print_freq == 0:
             print(('Test: [{0}/{1}]\t'
-                  'Time {batch_time.val:.3f} ({batch_time.avg:.3f})\t'
-                  'Loss {loss.val:.4f} ({loss.avg:.4f})\t'
-                  'Prec@1 {top1.val:.3f} ({top1.avg:.3f})\t'
-                  'Prec@5 {top5.val:.3f} ({top5.avg:.3f})'.format(
-                   i, len(val_loader), batch_time=batch_time, loss=losses,
-                   top1=top1, top5=top5)))
+                   'Time {batch_time.val:.3f} ({batch_time.avg:.3f})\t'
+                   'Loss {loss.val:.4f} ({loss.avg:.4f})\t'
+                   'Prec@1 {top1.val:.3f} ({top1.avg:.3f})\t'
+                   'Prec@5 {top5.val:.3f} ({top5.avg:.3f})'.format(
+                i, len(val_loader), batch_time=batch_time, loss=losses,
+                top1=top1, top5=top5)))
 
     print(('Testing Results: Prec@1 {top1.avg:.3f} Prec@5 {top5.avg:.3f} Loss {loss.avg:.5f}'
-          .format(top1=top1, top5=top5, loss=losses)))
+           .format(top1=top1, top5=top5, loss=losses)))
 
     return top1.avg
 
@@ -232,6 +234,7 @@ def save_checkpoint(state, is_best, filename='checkpoint.pth.tar'):
 
 class AverageMeter(object):
     """Computes and stores the average and current value"""
+
     def __init__(self):
         self.reset()
 

@@ -16,9 +16,9 @@ class VORDInstance:
     def __repr__(self):
         return "VORD Instance: video_id=" + str(self.video_id)
 
-    def include_object(self, object):
+    def include_object(self, object_label):
         for each_so in self.subject_objects:
-            if each_so['category'].lower() == object.lower():
+            if each_so['category'].lower() == object_label.lower():
                 return True
         return False
 
