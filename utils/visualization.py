@@ -55,12 +55,12 @@ def get_objects_relations_list(data_type, merge=True):
 
 def statistic_visualization(label_list, num_list, title=None, bar_type=0):
     fontsize = 20
-    plt.figure(figsize=(40, 15))
+    plt.figure(figsize=(50, 10))
     if bar_type == 0:
         plt.bar(range(len(label_list)), num_list, color='#FAA460', tick_label=label_list)  # sandybrown
         plt.yscale('log')
         plt.tick_params(axis='y', labelsize=20)
-        plt.ylabel('Per Class Data Size', fontsize=fontsize)
+        plt.ylabel('Per Category Data Size', fontsize=fontsize+5)
         plt.xticks(rotation=90, fontsize=fontsize)
         plt.gca().yaxis.grid(True)
     elif bar_type == 1:
@@ -70,6 +70,7 @@ def statistic_visualization(label_list, num_list, title=None, bar_type=0):
     # plt.title(title, fontsize=fontsize*1.5)
     plt.axis('tight')
     plt.xlim([-1, len(label_list)])
+    plt.tight_layout()
     plt.savefig("{}.jpg".format(title), dpi=400)
     plt.show()
 
@@ -77,7 +78,7 @@ def statistic_visualization(label_list, num_list, title=None, bar_type=0):
 def statistic_visualization_pro_4_rela(label_list, num_list,
                                        highlight=True, title=None):
     fontsize = 20
-    plt.figure(figsize=(40, 15))
+    plt.figure(figsize=(50, 10))
 
     if highlight:
         colors = []
@@ -93,19 +94,20 @@ def statistic_visualization_pro_4_rela(label_list, num_list,
 
     plt.yscale('log')
     plt.tick_params(axis='y', labelsize=20)
-    plt.ylabel('Per Category Data Size', fontsize=fontsize)
+    plt.ylabel('Per Category Data Size', fontsize=fontsize+5)
     plt.xticks(rotation=90, fontsize=fontsize)
     plt.gca().yaxis.grid(True)
     # plt.title(title, fontsize=fontsize*1.5)
     plt.axis('tight')
     plt.xlim([-1, len(label_list)])
+    plt.tight_layout()  # Amazing!!
     plt.savefig("{}.jpg".format(title), dpi=400)
     plt.show()
 
 
 def get_dataset_visualizations():
-    for data_type in ['train', 'val']:
-        a, b, c, d = get_objects_relations_list(data_type, merge=False)
+    for data_type in ['train']:
+        a, b, c, d = get_objects_relations_list(data_type, merge=True)
         statistic_visualization(a, b, data_type + '_objects')
         # statistic_visualization(a, b, data_type + '_objects_1', 1)
         statistic_visualization_pro_4_rela(c, d, title=data_type + '_relations')
