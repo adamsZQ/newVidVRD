@@ -93,7 +93,7 @@ def statistic_visualization_pro_4_rela(label_list, num_list,
 
     plt.yscale('log')
     plt.tick_params(axis='y', labelsize=20)
-    plt.ylabel('Per Class Data Size', fontsize=fontsize)
+    plt.ylabel('Per Category Data Size', fontsize=fontsize)
     plt.xticks(rotation=90, fontsize=fontsize)
     plt.gca().yaxis.grid(True)
     # plt.title(title, fontsize=fontsize*1.5)
@@ -104,8 +104,8 @@ def statistic_visualization_pro_4_rela(label_list, num_list,
 
 
 def get_dataset_visualizations():
-    for data_type in ['train', 'test']:
-        a, b, c, d = get_objects_relations_list(data_type)
+    for data_type in ['train', 'val']:
+        a, b, c, d = get_objects_relations_list(data_type, merge=False)
         statistic_visualization(a, b, data_type + '_objects')
         # statistic_visualization(a, b, data_type + '_objects_1', 1)
         statistic_visualization_pro_4_rela(c, d, title=data_type + '_relations')
@@ -113,12 +113,12 @@ def get_dataset_visualizations():
 
 
 if __name__ == '__main__':
-    # get_dataset_visualizations()
+    get_dataset_visualizations()
     # a, b, c, d = get_objects_relations_list('test')
     # statistic_visualization(a, b)
     # statistic_visualization_pro_4_rela(c, d)
-    for each_type in ['train', 'test']:
-        a, b, c, d = get_objects_relations_list(each_type)
-        print(a)
-        print(len(a))
+    # for each_type in ['train', 'test']:
+    #     a, b, c, d = get_objects_relations_list(each_type)
+    #     print(a)
+    #     print(len(a))
 

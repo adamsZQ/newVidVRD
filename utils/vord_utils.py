@@ -236,6 +236,9 @@ def statistic_4_every_label(object_label_list, statistic_type=0):
 
 
 if __name__ == '__main__':
+
+    get_json_list('train', read_json_data=True)
+
     # vord_ins = gen_vord_instance(
     #     '/home/david/PycharmProjects/VVRD_Dataset10k/10kDataSet/nus-vord/2018-12-15/10389824704.json')
     # # print(vord_ins.subject_objects)
@@ -246,18 +249,19 @@ if __name__ == '__main__':
     # print(str(a))
     # print(str(b))
 
-    all_objects = [['adult', 'child', 'toy', 'baby', 'car', 'chair', 'dog', 'table'],
-                   ['cup', 'sofa', 'ball/sports ball', 'bottle', 'screen/monitor', 'guitar', 'cat', 'bicycle'],
-                   ['backpack', 'bird', 'baby seat', 'watercraft', 'camera', 'handbag', 'cellphone', 'laptop'],
-                   ['stool', 'dish', 'duck', 'motorcycle', 'bench', 'horse', 'piano', 'ski'],
-                   ['fish', 'cake', 'baby walker', 'elephant', 'snowboard', 'bat', 'bus/truck', 'chicken', 'hamster/rat', 'sheep/goat', 'surfboard', 'penguin', 'faucet', 'electric fan', 'sink', 'aircraft', 'refrigerator', 'skateboard', 'rabbit', 'train', 'fruits', 'traffic light', 'pig', 'suitcase'],
-                   ['bread', 'microwave', 'kangaroo', 'cattle/cow', 'turtle', 'scooter', 'racket', 'panda', 'leopard', 'oven', 'tiger', 'antelope', 'vegetables', 'toilet', 'stop sign', 'camel', 'lion', 'crab', 'crocodile', 'stingray', 'bear', 'frisbee', 'snake', 'squirrel']]
+    # all_objects = [['adult', 'child', 'toy', 'baby', 'car', 'chair', 'dog', 'table'],
+    #                ['cup', 'sofa', 'ball/sports ball', 'bottle', 'screen/monitor', 'guitar', 'cat', 'bicycle'],
+    #                ['backpack', 'bird', 'baby seat', 'watercraft', 'camera', 'handbag', 'cellphone', 'laptop'],
+    #                ['stool', 'dish', 'duck', 'motorcycle', 'bench', 'horse', 'piano', 'ski'],
+    #                ['fish', 'cake', 'baby walker', 'elephant', 'snowboard', 'bat', 'bus/truck', 'chicken', 'hamster/rat', 'sheep/goat', 'surfboard', 'penguin', 'faucet', 'electric fan', 'sink', 'aircraft', 'refrigerator', 'skateboard', 'rabbit', 'train', 'fruits', 'traffic light', 'pig', 'suitcase'],
+    #                ['bread', 'microwave', 'kangaroo', 'cattle/cow', 'turtle', 'scooter', 'racket', 'panda', 'leopard', 'oven', 'tiger', 'antelope', 'vegetables', 'toilet', 'stop sign', 'camel', 'lion', 'crab', 'crocodile', 'stingray', 'bear', 'frisbee', 'snake', 'squirrel']]
 
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-o', '--objects_list_id')
-    ARGS = parser.parse_args()
-    print(all_objects[int(ARGS.objects_list_id)])
-    statistic_4_every_label(all_objects[int(ARGS.objects_list_id)])
+    # parser = argparse.ArgumentParser()
+    # parser.add_argument('-o', '--objects_list_id')
+    # ARGS = parser.parse_args()
+    # print(all_objects[int(ARGS.objects_list_id)])
+    # statistic_4_every_label(all_objects[int(ARGS.objects_list_id)])
+
 
     # print(len(get_json_list(data_type='train', load_from_save=True, load_from_path='json_list_result_train_data.pkl'))) # 7000
     # void_ins = get_vord_instance(ins_path='json_list_result_train_data.pkl', get_instances=False, video_id=2893074134)
@@ -292,3 +296,23 @@ if __name__ == '__main__':
     #         print(rels)
     #         f.write(ins.video_path + '\n')
     # f.close()
+
+    # =-=-=-=-=-=-=-=-=-=-=-=-=-=  gen_new_instances -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+    # base_path = "/home/david/PycharmProjects/VVRD_Dataset10k/10kDataSet/nus-vord/"
+    # f_list = []
+    # with open("/home/david/PycharmProjects/VVRD_Dataset10k/10kDataSet/" + "val.json", 'r') as f:
+    #     for line in f:
+    #         line = line.strip()[1:-2]
+    #         f_list.append(line)
+    # f_list = f_list[1:-1]
+    # f_list[-1] = f_list[-1] + 'n'
+    # f_short_list = []
+    # for each_f in f_list:
+    #     f_short_list.append(each_f[11:-5])
+    # # print(f_list[1])
+    # # print(f_list[1][11:-5])
+    # print(f_short_list)
+    # with open("/home/david/PycharmProjects/VVRD_Dataset10k/10kDataSet/" + "val.txt", 'w+') as ff:
+    #     for each_ff in f_short_list:
+    #         ff.write(each_ff + '\n')
+
