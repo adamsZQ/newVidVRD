@@ -237,7 +237,7 @@ def statistic_4_every_label(object_label_list, statistic_type=0):
 
 if __name__ == '__main__':
 
-    get_json_list('train', read_json_data=True)
+    # get_json_list('train', read_json_data=True)
 
     # vord_ins = gen_vord_instance(
     #     '/home/david/PycharmProjects/VVRD_Dataset10k/10kDataSet/nus-vord/2018-12-15/10389824704.json')
@@ -249,12 +249,27 @@ if __name__ == '__main__':
     # print(str(a))
     # print(str(b))
 
+    human_list = ['adult', 'child', 'baby']
+    animal_list = ['dog', 'cat', 'bird', 'duck', 'horse', 'fish', 'elephant', 'chicken',
+                   'hamster/rat', 'sheep/goat', 'penguin', 'rabbit', 'pig', 'kangaroo', 'cattle/cow', 'turtle',
+                   'panda', 'leopard', 'tiger', 'camel', 'lion', 'crab', 'crocodile', 'stingray',
+                   'bear', 'frisbee', 'snake', 'squirrel']
+    object_list = ['toy', 'car', 'chair', 'table', 'cup', 'sofa', 'ball/sports ball', 'bottle',
+                   'screen/monitor', 'guitar', 'bicycle', 'backpack', 'baby seat', 'watercraft', 'camera', 'handbag',
+                   'cellphone', 'laptop', 'stool', 'dish', 'motorcycle', 'bench', 'piano', 'ski',
+                   'cake', 'baby walker', 'snowboard', 'bat', 'bus/truck', 'surfboard', 'faucet', 'electric fan',
+                   'sink', 'aircraft', 'refrigerator', 'skateboard', 'train', 'fruits', 'traffic light', 'suitcase',
+                   'bread', 'microwave', 'scooter', 'racket', 'oven', 'antelope', 'vegetables', 'toilet', 'stop sign']
     # all_objects = [['adult', 'child', 'toy', 'baby', 'car', 'chair', 'dog', 'table'],
     #                ['cup', 'sofa', 'ball/sports ball', 'bottle', 'screen/monitor', 'guitar', 'cat', 'bicycle'],
     #                ['backpack', 'bird', 'baby seat', 'watercraft', 'camera', 'handbag', 'cellphone', 'laptop'],
     #                ['stool', 'dish', 'duck', 'motorcycle', 'bench', 'horse', 'piano', 'ski'],
-    #                ['fish', 'cake', 'baby walker', 'elephant', 'snowboard', 'bat', 'bus/truck', 'chicken', 'hamster/rat', 'sheep/goat', 'surfboard', 'penguin', 'faucet', 'electric fan', 'sink', 'aircraft', 'refrigerator', 'skateboard', 'rabbit', 'train', 'fruits', 'traffic light', 'pig', 'suitcase'],
-    #                ['bread', 'microwave', 'kangaroo', 'cattle/cow', 'turtle', 'scooter', 'racket', 'panda', 'leopard', 'oven', 'tiger', 'antelope', 'vegetables', 'toilet', 'stop sign', 'camel', 'lion', 'crab', 'crocodile', 'stingray', 'bear', 'frisbee', 'snake', 'squirrel']]
+    #                ['fish', 'cake', 'baby walker', 'elephant', 'snowboard', 'bat', 'bus/truck', 'chicken',
+    #                'hamster/rat', 'sheep/goat', 'surfboard', 'penguin', 'faucet', 'electric fan', 'sink', 'aircraft',
+    #                'refrigerator', 'skateboard', 'rabbit', 'train', 'fruits', 'traffic light', 'pig', 'suitcase'],
+    #                ['bread', 'microwave', 'kangaroo', 'cattle/cow', 'turtle', 'scooter', 'racket', 'panda',
+    #                'leopard', 'oven', 'tiger', 'antelope', 'vegetables', 'toilet', 'stop sign', 'camel',
+    #                'lion', 'crab', 'crocodile', 'stingray', 'bear', 'frisbee', 'snake', 'squirrel']]
 
     # parser = argparse.ArgumentParser()
     # parser.add_argument('-o', '--objects_list_id')
