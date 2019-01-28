@@ -397,8 +397,10 @@ if __name__ == '__main__':
     # print(len(res))
 
     # EG.......
-    # video_id_list = [6797818033, 5178231559, 4752448635, 3942989234]
-    # for each_video in get_vord_instance(data_type_paths[0]):
-    #     # print(each_video.video_id)
-    #     if int(each_video.video_id) in video_id_list:
-    #         print(each_video.video_path)
+    # video_id_list = [6797818033, 5178231559, 4752448635, 3942989234, 8540312536]
+    video_id_list = [8724380456]
+    for each_video in get_vord_instance(data_type_paths[0]):
+        # print(each_video.video_id)
+        if int(each_video.video_id) in video_id_list:
+            print(each_video.video_path)
+

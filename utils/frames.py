@@ -89,5 +89,5 @@ if __name__ == '__main__':
     # for each_video_id in video_id_list:
     #     path = extract_all_frames('/home/david/Desktop/' + str(each_video_id) + '.mp4')
     #     print(path)
-    path = extract_all_frames('/home/david/Desktop/4752448635.mp4')
+    path = extract_all_frames('/home/david/Desktop/videosss/8724380456.mp4')
     print(path)
