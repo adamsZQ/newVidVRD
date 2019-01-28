@@ -82,9 +82,12 @@ def render_frames(frames, prediction):
 
 if __name__ == '__main__':
 
-    video_list = [2404303400, 3942989234, 5178231559, 8139058612, 8724380456,
-                  3754457066, 4625256813, 6797818033, 8540312536, 8786428415,
-                  3793953104, 4752448635, 7521887686, 8572776945, 8968742990]
-    for each_video_id in video_list:
-        path = extract_all_frames('/home/david/Desktop/videos/' + str(each_video_id) + '.mp4')
-        print(path)
+    # video_list = [2404303400, 3942989234, 5178231559, 8139058612, 8724380456,
+    #               3754457066, 4625256813, 6797818033, 8540312536, 8786428415,
+    #               3793953104, 4752448635, 7521887686, 8572776945, 8968742990]
+    # video_id_list = [6797818033, 5178231559, 4752448635, 3942989234]
+    # for each_video_id in video_id_list:
+    #     path = extract_all_frames('/home/david/Desktop/' + str(each_video_id) + '.mp4')
+    #     print(path)
+    path = extract_all_frames('/home/david/Desktop/4752448635.mp4')
+    print(path)

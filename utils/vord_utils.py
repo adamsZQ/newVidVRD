@@ -285,8 +285,10 @@ if __name__ == '__main__':
 
     # get_json_list('train', read_json_data=True)
 
-    # vord_ins = gen_vord_instance(
-    #     '/home/david/PycharmProjects/VVRD_Dataset10k/10kDataSet/nus-vord/2018-12-15/10389824704.json')
+    vord_ins = gen_vord_instance(
+        '/home/david/PycharmProjects/VVRD_Dataset10k/10kDataSet/nus-vord/2018-12-15/10389824704.json')
+    # print(vord_ins.video_id)
+    # print(vord_ins.video_path)
     # vord_ins1 = gen_vord_instance(
     #     '/home/david/PycharmProjects/VVRD_Dataset10k/10kDataSet/nus-vord/2018-12-21/2445330684.json')
     # print(statistic_4_triplet(vord_ins, vord_ins1))
@@ -391,5 +393,12 @@ if __name__ == '__main__':
     #         ff.write(each_ff + '\n')
 
     # -=-=-=-=-=-=-=-=-=-=-=-=-= trplets
-    res = statistic_all_triplet()
-    print(len(res))
+    # res = statistic_all_triplet()
+    # print(len(res))
+
+    # EG.......
+    # video_id_list = [6797818033, 5178231559, 4752448635, 3942989234]
+    # for each_video in get_vord_instance(data_type_paths[0]):
+    #     # print(each_video.video_id)
+    #     if int(each_video.video_id) in video_id_list:
+    #         print(each_video.video_path)
