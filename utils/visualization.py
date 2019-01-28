@@ -63,7 +63,7 @@ def statistic_visualization(label_list, num_list, highlight=True, title=None, ba
             animal_list = ['dog', 'cat', 'bird', 'duck', 'horse', 'fish', 'elephant', 'chicken',
                            'hamster/rat', 'sheep/goat', 'penguin', 'rabbit', 'pig', 'kangaroo', 'cattle/cow', 'turtle',
                            'panda', 'leopard', 'tiger', 'camel', 'lion', 'crab', 'crocodile', 'stingray',
-                           'bear', 'frisbee', 'snake', 'squirrel']
+                           'bear', 'snake', 'squirrel']
             object_list = ['toy', 'car', 'chair', 'table', 'cup', 'sofa', 'ball/sports ball', 'bottle',
                            'screen/monitor', 'guitar', 'bicycle', 'backpack', 'baby seat', 'watercraft', 'camera',
                            'handbag',
@@ -73,7 +73,7 @@ def statistic_visualization(label_list, num_list, highlight=True, title=None, ba
                            'sink', 'aircraft', 'refrigerator', 'skateboard', 'train', 'fruits', 'traffic light',
                            'suitcase',
                            'bread', 'microwave', 'scooter', 'racket', 'oven', 'antelope', 'vegetables', 'toilet',
-                           'stop sign']
+                           'stop sign', 'frisbee']
             # print(len(human_list))
             # print(len(animal_list))
             # print(len(object_list))
@@ -87,10 +87,15 @@ def statistic_visualization(label_list, num_list, highlight=True, title=None, ba
                 else:
                     print('There isnt a type for: ' + each_label)
 
+            for i in range(len(label_list)):
+                # Uniform space format
+                if ' ' in label_list[i]:
+                    label_list[i] = label_list[i].replace(" ", "_")
+
             plt.bar(range(len(label_list)), num_list, color=color_list, tick_label=label_list)
             plt.bar(0, 0, color='#8F8FEF', label='Human')
             plt.bar(0, 0, color='#FAA460', label='Animal')
-            plt.bar(0, 0, color='#FFBFDF', label='Object')
+            plt.bar(0, 0, color='#FFBFDF', label='Other')
         else:
             print('no highlight??')
             plt.bar(range(len(label_list)), num_list, color='#FAA460', tick_label=label_list)  # sandybrown
@@ -150,9 +155,9 @@ def statistic_visualization_pro_4_rela(label_list, num_list,
 def get_dataset_visualizations():
     for data_type in ['train']:
         a, b, c, d = get_objects_relations_list(data_type, merge=True)
-        # statistic_visualization(a, b, title=data_type + '_objects')
+        statistic_visualization(a, b, title=data_type + '_objects')
         # statistic_visualization(a, b, data_type + '_objects_1', 1)
-        statistic_visualization_pro_4_rela(c, d, title=data_type + '_relations')
+        # statistic_visualization_pro_4_rela(c, d, title=data_type + '_relations')
         # statistic_visualization(c, d, data_type + '_relations_1', 1)
 
 
@@ -163,7 +168,7 @@ def statistic_objects():
     animal_list = ['dog', 'cat', 'bird', 'duck', 'horse', 'fish', 'elephant', 'chicken',
                    'hamster/rat', 'sheep/goat', 'penguin', 'rabbit', 'pig', 'kangaroo', 'cattle/cow', 'turtle',
                    'panda', 'leopard', 'tiger', 'camel', 'lion', 'crab', 'crocodile', 'stingray',
-                   'bear', 'frisbee', 'snake', 'squirrel']
+                   'bear', 'snake', 'squirrel']
     object_list = ['toy', 'car', 'chair', 'table', 'cup', 'sofa', 'ball/sports ball', 'bottle',
                    'screen/monitor', 'guitar', 'bicycle', 'backpack', 'baby seat', 'watercraft', 'camera',
                    'handbag',
@@ -173,7 +178,7 @@ def statistic_objects():
                    'sink', 'aircraft', 'refrigerator', 'skateboard', 'train', 'fruits', 'traffic light',
                    'suitcase',
                    'bread', 'microwave', 'scooter', 'racket', 'oven', 'antelope', 'vegetables', 'toilet',
-                   'stop sign']
+                   'stop sign', 'frisbee']
 
     human_indexs = []
     object_indexs = []
@@ -253,4 +258,4 @@ if __name__ == '__main__':
     #     print(a)
     #     print(len(a))
     # statistic_relations()
-
+    # statistic_objects()
