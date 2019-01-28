@@ -235,13 +235,71 @@ def statistic_4_every_label(object_label_list, statistic_type=0):
         return object_label_dicts
 
 
+def statistic_4_triplet(ins_a, ins_b):
+    """
+    statistics for instance a and b, how much overlap relations.
+    :return:
+    """
+    ins_a_trip = ins_a.get_triplet_list()
+    ins_b_trip = ins_b.get_triplet_list()
+    # print(len(ins_a_trip), ins_a_trip)
+    # print(len(ins_b_trip), ins_b_trip)
+    overlap_trips = list(set(ins_a_trip).intersection(set(ins_b_trip)))
+    # print(ins_a.video_id, ins_b.video_id, len(overlap_trips))
+    return overlap_trips
+
+
+def statistic_all_triplet():
+    """
+        statistics for train and val, how much overlap relations.
+        :return:
+    """
+    overlap_all = []
+    train_ins_list = get_vord_instance(data_type_paths[0])
+    val_ins_list = get_vord_instance(data_type_paths[2])
+    for each_train_ins in train_ins_list:
+        for each_val_ins in val_ins_list:
+            overlap_all.extend(statistic_4_triplet(each_train_ins, each_val_ins))
+
+    print(len(overlap_all))
+    overlap_all = set(overlap_all)
+    print(len(overlap_all))
+    f = open('overlap_triplet.txt', 'w+')
+    for each_trip in overlap_all:
+        train_num = 0
+        val_num = 0
+        for each_train_ins in train_ins_list:
+            for each_ins_trip in each_train_ins.get_triplet_list():
+                if each_ins_trip == each_trip:
+                    train_num += 1
+        for each_val_ins in val_ins_list:
+            for each_ins_trip in each_val_ins.get_triplet_list():
+                if each_ins_trip == each_trip:
+                    val_num += 1
+        f.write(str(each_trip) + " \t| " + str(train_num) + " \t| " + str(val_num) + '\n')
+    f.close()
+    return overlap_all
+
+
 if __name__ == '__main__':
 
     # get_json_list('train', read_json_data=True)
 
     # vord_ins = gen_vord_instance(
     #     '/home/david/PycharmProjects/VVRD_Dataset10k/10kDataSet/nus-vord/2018-12-15/10389824704.json')
-    # # print(vord_ins.subject_objects)
+    # vord_ins1 = gen_vord_instance(
+    #     '/home/david/PycharmProjects/VVRD_Dataset10k/10kDataSet/nus-vord/2018-12-21/2445330684.json')
+    # print(statistic_4_triplet(vord_ins, vord_ins1))
+    # print(vord_ins.subject_objects)
+    # print(vord_ins.relation_instances)
+    # print(len(vord_ins.relation_instances))
+    # print(vord_ins.get_triplet_list())
+    # test_trip_list = vord_ins.get_triplet_list()
+    # print(len(test_trip_list))
+    #
+    # test_list = [('child', 'watch', 'baby'), ('child', 'watch', 'adult'), ('child', 'watch', 'adult'), ('adult', 'watch', 'child')]
+
+
     # print(vord_ins.get_object_trajs('adult'))
     # for each_traj in vord_ins.trajectories:
     #     print(each_traj)
@@ -249,17 +307,18 @@ if __name__ == '__main__':
     # print(str(a))
     # print(str(b))
 
-    human_list = ['adult', 'child', 'baby']
-    animal_list = ['dog', 'cat', 'bird', 'duck', 'horse', 'fish', 'elephant', 'chicken',
-                   'hamster/rat', 'sheep/goat', 'penguin', 'rabbit', 'pig', 'kangaroo', 'cattle/cow', 'turtle',
-                   'panda', 'leopard', 'tiger', 'camel', 'lion', 'crab', 'crocodile', 'stingray',
-                   'bear', 'frisbee', 'snake', 'squirrel']
-    object_list = ['toy', 'car', 'chair', 'table', 'cup', 'sofa', 'ball/sports ball', 'bottle',
-                   'screen/monitor', 'guitar', 'bicycle', 'backpack', 'baby seat', 'watercraft', 'camera', 'handbag',
-                   'cellphone', 'laptop', 'stool', 'dish', 'motorcycle', 'bench', 'piano', 'ski',
-                   'cake', 'baby walker', 'snowboard', 'bat', 'bus/truck', 'surfboard', 'faucet', 'electric fan',
-                   'sink', 'aircraft', 'refrigerator', 'skateboard', 'train', 'fruits', 'traffic light', 'suitcase',
-                   'bread', 'microwave', 'scooter', 'racket', 'oven', 'antelope', 'vegetables', 'toilet', 'stop sign']
+    # human_list = ['adult', 'child', 'baby']
+    # animal_list = ['dog', 'cat', 'bird', 'duck', 'horse', 'fish', 'elephant', 'chicken',
+    #                'hamster/rat', 'sheep/goat', 'penguin', 'rabbit', 'pig', 'kangaroo', 'cattle/cow', 'turtle',
+    #                'panda', 'leopard', 'tiger', 'camel', 'lion', 'crab', 'crocodile', 'stingray',
+    #                'bear', 'frisbee', 'snake', 'squirrel']
+    # object_list = ['toy', 'car', 'chair', 'table', 'cup', 'sofa', 'ball/sports ball', 'bottle',
+    #                'screen/monitor', 'guitar', 'bicycle', 'backpack', 'baby seat', 'watercraft', 'camera', 'handbag',
+    #                'cellphone', 'laptop', 'stool', 'dish', 'motorcycle', 'bench', 'piano', 'ski',
+    #                'cake', 'baby walker', 'snowboard', 'bat', 'bus/truck', 'surfboard', 'faucet', 'electric fan',
+    #                'sink', 'aircraft', 'refrigerator', 'skateboard', 'train', 'fruits', 'traffic light', 'suitcase',
+    #                'bread', 'microwave', 'scooter', 'racket', 'oven', 'antelope', 'vegetables', 'toilet', 'stop sign']
+
     # all_objects = [['adult', 'child', 'toy', 'baby', 'car', 'chair', 'dog', 'table'],
     #                ['cup', 'sofa', 'ball/sports ball', 'bottle', 'screen/monitor', 'guitar', 'cat', 'bicycle'],
     #                ['backpack', 'bird', 'baby seat', 'watercraft', 'camera', 'handbag', 'cellphone', 'laptop'],
@@ -331,3 +390,6 @@ if __name__ == '__main__':
     #     for each_ff in f_short_list:
     #         ff.write(each_ff + '\n')
 
+    # -=-=-=-=-=-=-=-=-=-=-=-=-= trplets
+    res = statistic_all_triplet()
+    print(len(res))

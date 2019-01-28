@@ -115,7 +115,7 @@ def statistic_visualization(label_list, num_list, highlight=True, title=None, ba
 def statistic_visualization_pro_4_rela(label_list, num_list,
                                        highlight=True, title=None):
     fontsize = 30
-    plt.figure(figsize=(50, 10))
+    plt.figure(figsize=(50, 12))
     # print(len(label_list))
 
     if highlight:
@@ -127,8 +127,8 @@ def statistic_visualization_pro_4_rela(label_list, num_list,
             else:
                 colors.append('#FFA07A')   # lightsalmon
         plt.bar(range(len(label_list)), num_list, color=colors, tick_label=label_list)
-        plt.bar(0, 0, color='#87CEFA', label='Spatial Relations')
-        plt.bar(0, 0, color='#FFA07A', label='Action')
+        plt.bar(0, 0, color='#87CEFA', label='Spatial Predicate')
+        plt.bar(0, 0, color='#FFA07A', label='Action Predicate')
     else:
         print("No highlight???")
 
@@ -140,6 +140,7 @@ def statistic_visualization_pro_4_rela(label_list, num_list,
     # plt.title(title, fontsize=fontsize*1.5)
     plt.axis('tight')
     plt.xlim([-1, len(label_list)])
+    plt.ylim((1, 200000))
     plt.legend(loc="upper right", prop={'size': 30})
     plt.tight_layout()  # Amazing!!
     plt.savefig("{}.pdf".format(title), dpi=400)
@@ -149,7 +150,7 @@ def statistic_visualization_pro_4_rela(label_list, num_list,
 def get_dataset_visualizations():
     for data_type in ['train']:
         a, b, c, d = get_objects_relations_list(data_type, merge=True)
-        statistic_visualization(a, b, title=data_type + '_objects')
+        # statistic_visualization(a, b, title=data_type + '_objects')
         # statistic_visualization(a, b, data_type + '_objects_1', 1)
         statistic_visualization_pro_4_rela(c, d, title=data_type + '_relations')
         # statistic_visualization(c, d, data_type + '_relations_1', 1)
@@ -244,12 +245,12 @@ def statistic_relations():
 
 
 if __name__ == '__main__':
-    # get_dataset_visualizations()
+    get_dataset_visualizations()
     # statistic_visualization(a, b)
     # statistic_visualization_pro_4_rela(c, d)
     # for each_type in ['train', 'test']:
     #     a, b, c, d = get_objects_relations_list(each_type)
     #     print(a)
     #     print(len(a))
-    statistic_relations()
+    # statistic_relations()
 

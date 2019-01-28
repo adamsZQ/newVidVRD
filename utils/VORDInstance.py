@@ -48,3 +48,17 @@ class VORDInstance:
         #       + str(len(objects_list)) + " objects and " +
         #       str(len(relations_list)) + " relations.")
         return objects_list, relations_list
+
+    def get_triplet_list(self):
+        categorys = {}
+        for each_os in self.subject_objects:
+            categorys[each_os['tid']] = each_os['category']
+
+        triplet_list = []
+        for each_pred in self.relation_instances:
+            each_trip = (categorys[each_pred['subject_tid']],
+                         each_pred['predicate'],
+                         categorys[each_pred['object_tid']])
+            triplet_list.append(each_trip)
+
+        return triplet_list
