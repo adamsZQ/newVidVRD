@@ -257,36 +257,88 @@ def statistic_all_triplet():
     overlap_all = []
     train_ins_list = get_vord_instance(data_type_paths[0])
     val_ins_list = get_vord_instance(data_type_paths[2])
+    # train_triplet_sum = 0
+    # val_triplet_sum = 0
+    # train_triplet_list = []
+    # val_triplet_list = []
+
+    # for each_val_ins in val_ins_list:
+    #     val_triplet_sum += len(each_val_ins.get_triplet_list())
+
     for each_train_ins in train_ins_list:
+        # train_triplet_sum += len(each_train_ins.get_triplet_list())
         for each_val_ins in val_ins_list:
             overlap_all.extend(statistic_4_triplet(each_train_ins, each_val_ins))
 
-    print(len(overlap_all))
-    overlap_all = set(overlap_all)
-    print(len(overlap_all))
-    f = open('overlap_triplet.txt', 'w+')
-    for each_trip in overlap_all:
-        train_num = 0
-        val_num = 0
-        for each_train_ins in train_ins_list:
-            for each_ins_trip in each_train_ins.get_triplet_list():
-                if each_ins_trip == each_trip:
-                    train_num += 1
-        for each_val_ins in val_ins_list:
-            for each_ins_trip in each_val_ins.get_triplet_list():
-                if each_ins_trip == each_trip:
-                    val_num += 1
-        f.write(str(each_trip) + " \t| " + str(train_num) + " \t| " + str(val_num) + '\n')
-    f.close()
+    # print(train_triplet_sum)    # 267210
+    # print(val_triplet_sum)      # 30142
+    # print(len(overlap_all))     # 3565040
+    # overlap_all = set(overlap_all)
+    # print(len(overlap_all))     # 2115
+
+    # train_overlap_trip_sum = 0
+    # val_overlap_trip_sum = 0
+    # for each_trip in overlap_all:
+    #     for each_ins in train_ins_list:
+    #         for each_ins_trip in each_ins.get_triplet_list():
+    #             if each_trip == each_ins_trip:
+    #                 train_overlap_trip_sum += 1
+    #
+    #     for each_ins in val_ins_list:
+    #         for each_ins_trip in each_ins.get_triplet_list():
+    #             if each_trip == each_ins_trip:
+    #                 val_overlap_trip_sum += 1
+
+    # print(train_overlap_trip_sum)       # 244970
+    # print(val_overlap_trip_sum)         # 29501
+
+    # f = open('overlap_triplet.txt', 'w+')
+    # for each_trip in overlap_all:
+    #     train_num = 0
+    #     val_num = 0
+    #     for each_train_ins in train_ins_list:
+    #         for each_ins_trip in each_train_ins.get_triplet_list():
+    #             if each_ins_trip == each_trip:
+    #                 train_num += 1
+    #     for each_val_ins in val_ins_list:
+    #         for each_ins_trip in each_val_ins.get_triplet_list():
+    #             if each_ins_trip == each_trip:
+    #                 val_num += 1
+    #     f.write(str(each_trip) + " \t| " + str(train_num) + " \t| " + str(val_num) + '\n')
+    # f.close()
     return overlap_all
+
+
+def get_relations_sum():
+    train_ins_list = get_vord_instance(data_type_paths[0])
+    val_ins_list = get_vord_instance(data_type_paths[2])
+    train_relations_list = []
+    val_relations_list = []
+    for each_ins in train_ins_list:
+        _, each_ins_relations = each_ins.get_object_relations_list()
+        train_relations_list += each_ins_relations
+
+    for each_ins in val_ins_list:
+        _, each_ins_relations = each_ins.get_object_relations_list()
+        val_relations_list += each_ins_relations
+
+    # train_relations = set(train_relations_list)
+    # val_relations = set(val_relations_list)
+    print('trains: ' + str(len(train_relations_list)))      # 267210
+    print('val: ' + str(len(val_relations_list)))           # 30142
+
+    # overlap
+    # overlap_relations = train_relations & val_relations
+    # print('overlap: ' + str(len(overlap_relations)))
+
 
 
 if __name__ == '__main__':
 
     # get_json_list('train', read_json_data=True)
 
-    vord_ins = gen_vord_instance(
-        '/home/david/PycharmProjects/VVRD_Dataset10k/10kDataSet/nus-vord/2018-12-15/10389824704.json')
+    # vord_ins = gen_vord_instance(
+    #     '/home/david/PycharmProjects/VVRD_Dataset10k/10kDataSet/nus-vord/2018-12-15/10389824704.json')
     # print(vord_ins.video_id)
     # print(vord_ins.video_path)
     # vord_ins1 = gen_vord_instance(
@@ -394,13 +446,17 @@ if __name__ == '__main__':
 
     # -=-=-=-=-=-=-=-=-=-=-=-=-= trplets
     # res = statistic_all_triplet()
+
     # print(len(res))
 
     # EG.......
     # video_id_list = [6797818033, 5178231559, 4752448635, 3942989234, 8540312536]
-    video_id_list = [8724380456]
-    for each_video in get_vord_instance(data_type_paths[0]):
-        # print(each_video.video_id)
-        if int(each_video.video_id) in video_id_list:
-            print(each_video.video_path)
+    # video_id_list = [8724380456]
+    # for each_video in get_vord_instance(data_type_paths[0]):
+    #     # print(each_video.video_id)
+    #     if int(each_video.video_id) in video_id_list:
+    #         print(each_video.video_path)
+
+    # relationssss
+    get_relations_sum()
 
