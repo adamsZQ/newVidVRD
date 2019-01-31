@@ -324,17 +324,15 @@ def get_relations_sum():
 
     # train_relations = set(train_relations_list)
     # val_relations = set(val_relations_list)
-    print('trains: ' + str(len(train_relations_list)))      # 267210
-    print('val: ' + str(len(val_relations_list)))           # 30142
+    print('trains: ' + str(len(train_relations_list)))  # 267210
+    print('val: ' + str(len(val_relations_list)))  # 30142
 
     # overlap
     # overlap_relations = train_relations & val_relations
     # print('overlap: ' + str(len(overlap_relations)))
 
 
-
 if __name__ == '__main__':
-
     # get_json_list('train', read_json_data=True)
 
     # vord_ins = gen_vord_instance(
@@ -352,7 +350,6 @@ if __name__ == '__main__':
     # print(len(test_trip_list))
     #
     # test_list = [('child', 'watch', 'baby'), ('child', 'watch', 'adult'), ('child', 'watch', 'adult'), ('adult', 'watch', 'child')]
-
 
     # print(vord_ins.get_object_trajs('adult'))
     # for each_traj in vord_ins.trajectories:
@@ -389,7 +386,6 @@ if __name__ == '__main__':
     # ARGS = parser.parse_args()
     # print(all_objects[int(ARGS.objects_list_id)])
     # statistic_4_every_label(all_objects[int(ARGS.objects_list_id)])
-
 
     # print(len(get_json_list(data_type='train', load_from_save=True, load_from_path='json_list_result_train_data.pkl'))) # 7000
     # void_ins = get_vord_instance(ins_path='json_list_result_train_data.pkl', get_instances=False, video_id=2893074134)
@@ -459,4 +455,3 @@ if __name__ == '__main__':
 
     # relationssss
     get_relations_sum()
-

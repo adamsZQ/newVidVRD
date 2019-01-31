@@ -79,11 +79,11 @@ def statistic_visualization(label_list, num_list, highlight=True, title=None, ba
             # print(len(object_list))
             for each_label in label_list:
                 if each_label in human_list:
-                    color_list.append('#8F8FEF')   # light purple
+                    color_list.append('#FFBFDF')   # light purple
                 elif each_label in animal_list:
-                    color_list.append('#FAA460')   # sandybrown
+                    color_list.append('#8F8FEF')   # sandybrown
                 elif each_label in object_list:
-                    color_list.append('#FFBFDF')   # light pink
+                    color_list.append('#FAA460')   # light pink
                 else:
                     print('There isnt a type for: ' + each_label)
 
@@ -93,9 +93,9 @@ def statistic_visualization(label_list, num_list, highlight=True, title=None, ba
                     label_list[i] = label_list[i].replace(" ", "_")
 
             plt.bar(range(len(label_list)), num_list, color=color_list, tick_label=label_list)
-            plt.bar(0, 0, color='#8F8FEF', label='Human')
-            plt.bar(0, 0, color='#FAA460', label='Animal')
-            plt.bar(0, 0, color='#FFBFDF', label='Other')
+            plt.bar(0, 0, color='#FFBFDF', label='Human')
+            plt.bar(0, 0, color='#8F8FEF', label='Animal')
+            plt.bar(0, 0, color='#FAA460', label='Other')
         else:
             print('no highlight??')
             plt.bar(range(len(label_list)), num_list, color='#FAA460', tick_label=label_list)  # sandybrown
@@ -113,7 +113,7 @@ def statistic_visualization(label_list, num_list, highlight=True, title=None, ba
     plt.xlim([-1, len(label_list)])
     plt.legend(loc="upper right", prop={'size': 30})
     plt.tight_layout()
-    plt.savefig("{}.pdf".format(title), dpi=400)
+    plt.savefig("{}.png".format(title), dpi=400)
     plt.show()
 
 
@@ -128,12 +128,12 @@ def statistic_visualization_pro_4_rela(label_list, num_list,
         highlight_list = ['next_to', 'in_front_of', 'above', 'beneath', 'behind', 'away', 'towards', 'inside']
         for each_label in label_list:
             if each_label in highlight_list:
-                colors.append('#87CEFA')   # lightskyblue
+                colors.append('#FFA07A')   # lightskyblue
             else:
-                colors.append('#FFA07A')   # lightsalmon
+                colors.append('#87CEFA')   # lightsalmon
         plt.bar(range(len(label_list)), num_list, color=colors, tick_label=label_list)
-        plt.bar(0, 0, color='#87CEFA', label='Spatial Predicate')
-        plt.bar(0, 0, color='#FFA07A', label='Action Predicate')
+        plt.bar(0, 0, color='#FFA07A', label='Spatial Predicate')
+        plt.bar(0, 0, color='#87CEFA', label='Action Predicate')
     else:
         print("No highlight???")
 
@@ -148,7 +148,7 @@ def statistic_visualization_pro_4_rela(label_list, num_list,
     plt.ylim((1, 200000))
     plt.legend(loc="upper right", prop={'size': 30})
     plt.tight_layout()  # Amazing!!
-    plt.savefig("{}.pdf".format(title), dpi=400)
+    plt.savefig("{}.png".format(title), dpi=400)
     plt.show()
 
 
@@ -157,7 +157,7 @@ def get_dataset_visualizations():
         a, b, c, d = get_objects_relations_list(data_type, merge=True)
         statistic_visualization(a, b, title=data_type + '_objects')
         # statistic_visualization(a, b, data_type + '_objects_1', 1)
-        # statistic_visualization_pro_4_rela(c, d, title=data_type + '_relations')
+        statistic_visualization_pro_4_rela(c, d, title=data_type + '_relations')
         # statistic_visualization(c, d, data_type + '_relations_1', 1)
 
 

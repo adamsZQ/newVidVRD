@@ -332,10 +332,10 @@ class _NonLocalBlockND(nn.Module):
                 self.phi = nn.Sequential(self.phi, max_pool(kernel_size=2))
 
     def forward(self, x):
-        '''
+        """
         :param x: (b, c, t, h, w)
         :return:
-        '''
+        """
 
         output = self.operation_function(x)
         return output
