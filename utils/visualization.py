@@ -1,7 +1,11 @@
+import json
+import os
+
 import matplotlib.pyplot as plt
 from matplotlib.ticker import ScalarFormatter
 import vord_utils
 import VORDInstance
+import numpy as np
 from collections import Counter
 
 
@@ -79,11 +83,11 @@ def statistic_visualization(label_list, num_list, highlight=True, title=None, ba
             # print(len(object_list))
             for each_label in label_list:
                 if each_label in human_list:
-                    color_list.append('#FFBFDF')   # light purple
+                    color_list.append('#FFBFDF')  # light purple
                 elif each_label in animal_list:
-                    color_list.append('#8F8FEF')   # sandybrown
+                    color_list.append('#8F8FEF')  # sandybrown
                 elif each_label in object_list:
-                    color_list.append('#FAA460')   # light pink
+                    color_list.append('#FAA460')  # light pink
                 else:
                     print('There isnt a type for: ' + each_label)
 
@@ -101,7 +105,7 @@ def statistic_visualization(label_list, num_list, highlight=True, title=None, ba
             plt.bar(range(len(label_list)), num_list, color='#FAA460', tick_label=label_list)  # sandybrown
         plt.yscale('log')
         plt.tick_params(axis='y', labelsize=20)
-        plt.ylabel('Per Category Data Size', fontsize=fontsize+5)
+        plt.ylabel('Per Category Data Size', fontsize=fontsize + 5)
         plt.xticks(rotation=90, fontsize=fontsize)
         plt.gca().yaxis.grid(True)
     elif bar_type == 1:
@@ -128,9 +132,9 @@ def statistic_visualization_pro_4_rela(label_list, num_list,
         highlight_list = ['next_to', 'in_front_of', 'above', 'beneath', 'behind', 'away', 'towards', 'inside']
         for each_label in label_list:
             if each_label in highlight_list:
-                colors.append('#FFA07A')   # lightskyblue
+                colors.append('#FFA07A')  # lightskyblue
             else:
-                colors.append('#87CEFA')   # lightsalmon
+                colors.append('#87CEFA')  # lightsalmon
         plt.bar(range(len(label_list)), num_list, color=colors, tick_label=label_list)
         plt.bar(0, 0, color='#FFA07A', label='Spatial Predicate')
         plt.bar(0, 0, color='#87CEFA', label='Action Predicate')
@@ -139,7 +143,7 @@ def statistic_visualization_pro_4_rela(label_list, num_list,
 
     plt.yscale('log')
     plt.tick_params(axis='y', labelsize=20)
-    plt.ylabel('Per Category Data Size', fontsize=fontsize+5)
+    plt.ylabel('Per Category Data Size', fontsize=fontsize + 5)
     plt.xticks(rotation=90, fontsize=fontsize)
     plt.gca().yaxis.grid(True)
     # plt.title(title, fontsize=fontsize*1.5)
@@ -213,9 +217,9 @@ def statistic_objects():
     for each_animal_idx in animal_indexs:
         animal_sum += b[each_animal_idx]
 
-    print(human_sum)     # 21749
-    print(object_sum)    # 13773
-    print(animal_sum)    # 3080
+    print(human_sum)  # 21749
+    print(object_sum)  # 13773
+    print(animal_sum)  # 3080
     print(human_sum + object_sum + animal_sum)  # 38602
 
 
@@ -244,13 +248,104 @@ def statistic_relations():
     for each_relation_idx in relations_indexs:
         relation_sum += d[each_relation_idx]
 
-    print(spatial_sum)   # 228286
+    print(spatial_sum)  # 228286
     print(relation_sum)  # 69066
-    print(spatial_sum + relation_sum)   # 297352
+    print(spatial_sum + relation_sum)  # 297352
+
+
+def statistic_vid_length(generate=False):
+    training_dir_path = '/home/daivd/PycharmProjects/VORD/training'
+    val_dir_path = '/home/daivd/PycharmProjects/VORD/validation'
+    if generate:
+        vid_length_count_list = []
+        for each_root_path in [training_dir_path, val_dir_path]:
+            video_count = 0
+            for first_root_path, dirs, _ in os.walk(each_root_path):
+                for each_dir in dirs:
+                    for second_root_path, _, files in os.walk(os.path.join(first_root_path, each_dir)):
+                        for each_file in files:
+                            # print(os.path.join(second_root_path, each_file))
+                            with open(os.path.join(second_root_path, each_file), 'r') as each_json_file:
+                                video_count += 1
+                                each_json = json.load(each_json_file)
+                                # each_video = {
+                                #     "video_id": each_json['video_id'],
+                                #     "length": round(each_json['frame_count'] / each_json['fps']),
+                                #     "width": each_json['width'],
+                                #     "height": each_json['height']
+                                # }
+                                vid_length = round(each_json['frame_count'] / each_json['fps'], 2)
+                                # if vid_length == 1:
+                                #     print(each_json['video_path'])
+                                vid_length_count_list.append(vid_length)
+                    print(video_count)
+        with open('vid_length_count_list.json', 'w+') as f:
+            vid_length_count_json = {'list': vid_length_count_list}
+            f.write(json.dumps(vid_length_count_json))
+        dict_vid_length = Counter(vid_length_count_list)
+        with open(os.path.join(val_dir_path, 'video_length.json'), 'w+') as out_f:
+            out_f.write(json.dumps(dict_vid_length))
+    else:
+        with open(os.path.join(val_dir_path, 'video_length.json'), 'r') as in_f:
+            dict_vid_length = json.load(in_f)
+        with open('vid_length_count_list.json', 'r') as f:
+            vid_length_count_list = json.load(f)['list']
+
+    length_list = []
+    sum_length = 0
+    sum_videos = 0
+    for each_key in dict_vid_length.keys():
+        sum_videos += dict_vid_length[each_key]
+        sum_length += float(each_key) * dict_vid_length[each_key]
+        length_list.append(each_key)
+
+    # print(sum_length / sum_videos)
+    #
+    # x_list = []
+    # y_list = []
+    # for each_x in np.arange(0, 180, 3):
+    #     x_list.append(int(each_x) + 3)
+    #     each_y = 0
+    #     for each_key in dict_vid_length.keys():
+    #         if int(each_x) <= float(each_key) < int(each_x) + 3:
+    #             each_y += dict_vid_length[each_key]
+    #     y_list.append(each_y)
+    #
+    # if generate:
+    #     with open('xy_list.json', 'w+') as xy_f:
+    #         xy_json = {'x': x_list, 'y': y_list}
+    #
+    #         xy_f.write(json.dumps(xy_json))
+    # else:
+    #     with open('xy_list.json', 'r') as xy_f:
+    #         xy_json = json.load(xy_f)
+    #         x_list = xy_json['x']
+    #         y_list = xy_json['y']
+
+    fontsize = 30
+    plt.figure(figsize=(50, 12))
+    plt.hist(vid_length_count_list,
+             np.arange(0, 180, 3),
+             histtype='bar',
+             color='#0504aa',
+             rwidth=0.9)
+    plt.grid(axis='y', alpha=0.75)
+    plt.xlabel('Video length(Seconds)', fontsize=fontsize)
+    plt.ylabel('Video Count', fontsize=fontsize)
+    plt.axis('tight')
+    plt.gca().yaxis.grid(True)
+    plt.yticks(fontsize=fontsize)
+    plt.xticks(np.arange(3, 183, 3), rotation=90, fontsize=fontsize)
+    plt.xlim([0, 180])
+    plt.ylim(top=600)
+    plt.tight_layout()
+    plt.savefig("{}.png".format('VidCount'), dpi=100)
+
+    plt.show()
 
 
 if __name__ == '__main__':
-    get_dataset_visualizations()
+    # get_dataset_visualizations()
     # statistic_visualization(a, b)
     # statistic_visualization_pro_4_rela(c, d)
     # for each_type in ['train', 'test']:
@@ -259,3 +354,5 @@ if __name__ == '__main__':
     #     print(len(a))
     # statistic_relations()
     # statistic_objects()
+
+    statistic_vid_length(generate=False)
