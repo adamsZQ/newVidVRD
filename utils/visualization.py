@@ -327,7 +327,7 @@ def statistic_vid_length(generate=False):
     plt.hist(vid_length_count_list,
              np.arange(0, 180, 3),
              histtype='bar',
-             color='#0504aa',
+             color='#FFA07A',
              rwidth=0.9)
     plt.grid(axis='y', alpha=0.75)
     plt.xlabel('Video length(Seconds)', fontsize=fontsize)
