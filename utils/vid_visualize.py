@@ -133,27 +133,35 @@ def visualize(anno, video_path, out_path):
     write_video(video, anno['fps'], size, out_path)
 
 
-def conver_2_gif(videos_path='vis_out/visualization/'):
-    for root, dirs, files in os.walk(videos_path):
+def extract_frames(videos_path='vis_out/visualization'):
+    for _, _, files in os.walk(videos_path + '/videos'):
+        # print(files)
         for each_file in files:
-            output = subprocess.Popen("ffmpeg -i "
-                                      + os.path.join(videos_path, each_file)
-                                      + "  -r 1 \'"
-                                      + os.path.join(videos_path, "frames", each_file[:-4] + "-%03d.jpg")
-                                      + "\'",
-                                      stdout=subprocess.PIPE, shell=True).communicate()
+            frames_out = subprocess.Popen("ffmpeg -i "
+                                          + os.path.join(videos_path, "videos", each_file)
+                                          + " -r 1 \'"
+                                          + os.path.join(videos_path, "frames", each_file[:-4] + "-%03d.jpg")
+                                          + "\'",
+                                          stdout=subprocess.PIPE, shell=True).communicate()
             # gif_out = subprocess.Popen("convert -delay 20 -loop 0 " +
-            #                            os.path.join(videos_path, "frames", "*.jpg ")
-            #                            + each_file[:-4] + ".gif").communicate()
-            print("convert -delay 20 -loop 0 " +
-                  os.path.join(videos_path, "frames", each_file[:-4]) + "*.jpg "
-                  + each_file[:-4] + ".gif")
-            # os.system("convert -delay 20 -loop 0 " +
-            #           os.path.join(videos_path, "frames", each_file[:-4]) + "*.jpg "
-            #           + each_file[:-4] + ".gif")
+            #                            os.path.join(videos_path, "frames", each_file[:-4] + "*.jpg ")
+            #                            + os.path.join(videos_path, "gifs", each_file[:-4] + ".gif")).communicate()
+
+
+def convert_2_gif(videos_path='vis_out/visualization'):
+    videos = ['5839540211.mp4', '5178231559.mp4', '10148360995.mp4', '5100454414.mp4', '4803215882.mp4',
+              '9231052427.mp4', '5571958942.mp4', '6707182863.mp4', '3578746529.mp4', '3942989234.mp4']
+    for each_vid in videos:
+        print(each_vid)
+        os.system("convert -delay 20 -loop 0 " +
+                  os.path.join(videos_path, "frames", each_vid[:-4] + "*.jpg ")
+                  + os.path.join(videos_path, "gifs", each_vid[:-4] + ".gif"))
 
 
 if __name__ == '__main__':
+
+    # python vid_visualize.py ~/PycharmProjects/VORD/train_vids/ visualization vis_out/
+
     parser = argparse.ArgumentParser(description='Visualize annotation in video')
     parser.add_argument('video', type=str, default='visualization/',
                         help='Root path of videos')
@@ -175,9 +183,11 @@ if __name__ == '__main__':
         with open(anno_paths[i], 'r') as fin:
             anno = json.load(fin)
         if 'video_path' in anno:
-            video_path = os.path.join(args.video, anno['video_path'].split('/')[-1])
+            video_path = os.path.join(args.video, anno['video_path'])
         else:
             video_path = os.path.join(args.video, '{}.mp4'.format(anno['video_id']))
         out_path = os.path.join(args.out, '{}.mp4'.format(anno['video_id']))
         visualize(anno, video_path, out_path)
-    # conver_2_gif()
+
+    # extract_frames()
+    # convert_2_gif()
