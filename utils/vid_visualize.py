@@ -133,61 +133,53 @@ def visualize(anno, video_path, out_path):
     write_video(video, anno['fps'], size, out_path)
 
 
-def extract_frames(videos_path='vis_out/visualization'):
+def extract_frames_2_gif(videos_path='vis_out/visualization'):
+    os.system('mv ' + videos_path + '/*.mp4 ' + videos_path + '/videos/')
+
     for _, _, files in os.walk(videos_path + '/videos'):
         # print(files)
         for each_file in files:
+            print(each_file)
             frames_out = subprocess.Popen("ffmpeg -i "
                                           + os.path.join(videos_path, "videos", each_file)
-                                          + " -r 1 \'"
+                                          + " -r 1 -strict -2 -s 220x150 \'"
                                           + os.path.join(videos_path, "frames", each_file[:-4] + "-%03d.jpg")
                                           + "\'",
                                           stdout=subprocess.PIPE, shell=True).communicate()
-            # gif_out = subprocess.Popen("convert -delay 20 -loop 0 " +
-            #                            os.path.join(videos_path, "frames", each_file[:-4] + "*.jpg ")
-            #                            + os.path.join(videos_path, "gifs", each_file[:-4] + ".gif")).communicate()
-
-
-def convert_2_gif(videos_path='vis_out/visualization'):
-    videos = ['5839540211.mp4', '5178231559.mp4', '10148360995.mp4', '5100454414.mp4', '4803215882.mp4',
-              '9231052427.mp4', '5571958942.mp4', '6707182863.mp4', '3578746529.mp4', '3942989234.mp4']
-    for each_vid in videos:
-        print(each_vid)
-        os.system("convert -delay 20 -loop 0 " +
-                  os.path.join(videos_path, "frames", each_vid[:-4] + "*.jpg ")
-                  + os.path.join(videos_path, "gifs", each_vid[:-4] + ".gif"))
+            os.system("convert -delay 20 -loop 0 " +
+                      os.path.join(videos_path, "frames", each_file[:-4] + "*.jpg ")
+                      + os.path.join(videos_path, "gifs", each_file[:-4] + ".gif"))
 
 
 if __name__ == '__main__':
 
-    # python vid_visualize.py ~/PycharmProjects/VORD/train_vids/ visualization vis_out/
+    # python vid_visualize.py ~/PycharmProjects/VORD/train_vids/ visualization vis_out
 
-    parser = argparse.ArgumentParser(description='Visualize annotation in video')
-    parser.add_argument('video', type=str, default='visualization/',
-                        help='Root path of videos')
-    parser.add_argument('anno', type=str, default='visualization/',
-                        help='A annotation json file or a directory of annotation jsons')
-    parser.add_argument('out', type=str, default='vis_out/',
-                        help='Root path of output videos')
-    args = parser.parse_args()
+    # parser = argparse.ArgumentParser(description='Visualize annotation in video')
+    # parser.add_argument('video', type=str, default='visualization/',
+    #                     help='Root path of videos')
+    # parser.add_argument('anno', type=str, default='visualization/',
+    #                     help='A annotation json file or a directory of annotation jsons')
+    # parser.add_argument('out', type=str, default='vis_out/videos',
+    #                     help='Root path of output videos')
+    # args = parser.parse_args()
+    #
+    # if os.path.isdir(args.anno):
+    #     anno_paths = glob.glob('{}/*.json'.format(args.anno))
+    #     args.out = os.path.join(args.out, os.path.basename(os.path.normpath(args.anno)))
+    #     if not os.path.exists(args.out):
+    #         os.mkdir(args.out)
+    # else:
+    #     anno_paths = [args.anno]
+    #
+    # for i in trange(len(anno_paths)):
+    #     with open(anno_paths[i], 'r') as fin:
+    #         anno = json.load(fin)
+    #     if 'video_path' in anno:
+    #         video_path = os.path.join(args.video, anno['video_path'])
+    #     else:
+    #         video_path = os.path.join(args.video, '{}.mp4'.format(anno['video_id']))
+    #     out_path = os.path.join(args.out, '{}.mp4'.format(anno['video_id']))
+    #     visualize(anno, video_path, out_path)
 
-    if os.path.isdir(args.anno):
-        anno_paths = glob.glob('{}/*.json'.format(args.anno))
-        args.out = os.path.join(args.out, os.path.basename(os.path.normpath(args.anno)))
-        if not os.path.exists(args.out):
-            os.mkdir(args.out)
-    else:
-        anno_paths = [args.anno]
-
-    for i in trange(len(anno_paths)):
-        with open(anno_paths[i], 'r') as fin:
-            anno = json.load(fin)
-        if 'video_path' in anno:
-            video_path = os.path.join(args.video, anno['video_path'])
-        else:
-            video_path = os.path.join(args.video, '{}.mp4'.format(anno['video_id']))
-        out_path = os.path.join(args.out, '{}.mp4'.format(anno['video_id']))
-        visualize(anno, video_path, out_path)
-
-    # extract_frames()
-    # convert_2_gif()
+    extract_frames_2_gif()
