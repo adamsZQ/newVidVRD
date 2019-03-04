@@ -257,6 +257,7 @@ def statistic_actions():
     spatial_relations_list = ['next_to', 'in_front_of', 'above', 'beneath', 'behind', 'away', 'towards', 'inside']
     anno_path = '/home/daivd/PycharmProjects/vidor/annotation'
     exist_action_files_num = 0
+    all_video_num = 0
     for root_path, dirs, _ in os.walk(anno_path):
         for sub_path, _, anno_files in os.walk(root_path):
             # print(sub_path)
@@ -270,7 +271,8 @@ def statistic_actions():
                             exist_action_flag = True
                     if exist_action_flag:
                         exist_action_files_num += 1
-    print(exist_action_files_num)
+                    all_video_num += 1
+    print(exist_action_files_num, all_video_num, all_video_num - exist_action_files_num)    # 20931 23505 2574
 
 
 def statistic_vid_length(generate=False):
