@@ -255,11 +255,14 @@ def statistic_relations():
 
 def statistic_actions():
     spatial_relations_list = ['next_to', 'in_front_of', 'above', 'beneath', 'behind', 'away', 'towards', 'inside']
-    anno_path = '/home/daivd/PycharmProjects/vidor/annotation'
+    anno_path = '/home/daivd/PycharmProjects/vidor/annotation/'
+    splits = ['training', 'validation']
     exist_action_files_num = 0
     all_video_num = 0
-    for root_path, dirs, _ in os.walk(anno_path):
-        for sub_path, _, anno_files in os.walk(root_path):
+    for each_split in splits:
+        split_sum = 0
+        split_action_sum = 0
+        for sub_path, _, anno_files in os.walk(anno_path + each_split):
             # print(sub_path)
             # print(anno_files)
             for each_file in anno_files:
@@ -269,10 +272,16 @@ def statistic_actions():
                     for each_rela in anno_json['relation_instances']:
                         if each_rela['predicate'] not in spatial_relations_list:
                             exist_action_flag = True
-                    if exist_action_flag:
-                        exist_action_files_num += 1
-                    all_video_num += 1
-    print(exist_action_files_num, all_video_num, all_video_num - exist_action_files_num)    # 20931 23505 2574
+                if exist_action_flag:
+                    exist_action_files_num += 1
+                    split_action_sum += 1
+                all_video_num += 1
+                split_sum += 1
+        print(each_split, split_sum, split_action_sum)
+    print(exist_action_files_num, all_video_num, all_video_num - exist_action_files_num)
+    # training 7000 6246  10.77%
+    # validation 835 731  12.455%
+    # 6977 7835 858       10.95%
 
 
 def statistic_vid_length(generate=False):
