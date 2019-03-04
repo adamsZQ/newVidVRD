@@ -253,6 +253,26 @@ def statistic_relations():
     print(spatial_sum + relation_sum)  # 297352
 
 
+def statistic_actions():
+    spatial_relations_list = ['next_to', 'in_front_of', 'above', 'beneath', 'behind', 'away', 'towards', 'inside']
+    anno_path = '/home/daivd/PycharmProjects/vidor/annotation'
+    exist_action_files_num = 0
+    for root_path, dirs, _ in os.walk(anno_path):
+        for sub_path, _, anno_files in os.walk(root_path):
+            # print(sub_path)
+            # print(anno_files)
+            for each_file in anno_files:
+                exist_action_flag = False
+                with open(os.path.join(sub_path, each_file), 'r') as in_f:
+                    anno_json = json.load(in_f)
+                    for each_rela in anno_json['relation_instances']:
+                        if each_rela['predicate'] not in spatial_relations_list:
+                            exist_action_flag = True
+                    if exist_action_flag:
+                        exist_action_files_num += 1
+    print(exist_action_files_num)
+
+
 def statistic_vid_length(generate=False):
     training_dir_path = '/home/daivd/PycharmProjects/VORD/training'
     val_dir_path = '/home/daivd/PycharmProjects/VORD/validation'
@@ -355,4 +375,6 @@ if __name__ == '__main__':
     # statistic_relations()
     # statistic_objects()
 
-    statistic_vid_length(generate=False)
+    # statistic_vid_length(generate=False)
+
+    statistic_actions()
