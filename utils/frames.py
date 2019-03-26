@@ -81,6 +81,8 @@ def render_frames(frames, prediction):
 
 
 if __name__ == '__main__':
-    for root, dirs, files in os.walk('vis_out/visualization'):
-        for each_file in files:
-            print(extract_frames(each_file))
+    # for root, dirs, files in os.walk('vis_out/visualization'):
+    #     for each_file in files:
+    #         print(extract_frames(each_file))
+
+    extract_all_frames('/home/daivd/PycharmProjects/vidor/val_vids/0004/3022452780.mp4')
