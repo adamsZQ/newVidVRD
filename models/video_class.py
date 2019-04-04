@@ -76,7 +76,7 @@ class VideoClass(video_utils.Video2ClassProblem):
         ins_list = vid_data.gen_vrd_instance(feature_type)
         for i in range(3):
             features = {"image/encoded": np.array2string(ins_list[i].get_my_feature(feature_type).ravel()),
-                        "image/format": ["png"],
+                        "image/format": ["jpg"],
                         "image/height": [ins_list[i].height],
                         "image/width": [ins_list[i].width]}
             yield features
