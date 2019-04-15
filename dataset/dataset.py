@@ -89,12 +89,19 @@ class Dataset(object):
     def get_predicate_id(self, name):
         return self.pred2pid[name]
 
-    def get_triplets(self, split):
-        triplets = set()
-        for vid in self.get_index(split):
-            insts = self.get_relation_insts(vid, no_traj=True)
-            triplets.update(inst['triplet'] for inst in insts)
-        return triplets
+    def get_triplets(self, split, rm_duplicate=True):
+        if rm_duplicate:
+            triplets = set()
+            for vid in self.get_index(split):
+                insts = self.get_relation_insts(vid, no_traj=True)
+                triplets.update(inst['triplet'] for inst in insts)
+            return triplets
+        else:
+            triplets = list()
+            for vid in self.get_index(split):
+                insts = self.get_relation_insts(vid, no_traj=True)
+                triplets.append(inst['triplet'] for inst in insts)
+            return triplets
 
     def get_index(self, split):
         """
@@ -110,6 +117,12 @@ class Dataset(object):
         get raw annotation for a video
         """
         return self.annos[vid]
+
+    def get_so_with_id(self, vid):
+        objs_list = list()
+        for each_so in self.get_anno(vid)['subject/objects']:
+            objs_list.append(each_so['category'])
+        return objs_list
 
     def get_object_insts(self, vid):
         """

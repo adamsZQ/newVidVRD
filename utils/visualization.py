@@ -6,6 +6,7 @@ from matplotlib.ticker import ScalarFormatter
 import vord_utils
 import VORDInstance
 import numpy as np
+from dataset.vidor import VidOR
 from collections import Counter
 
 
@@ -59,7 +60,7 @@ def get_objects_relations_list(data_type, merge=True):
 
 def statistic_visualization(label_list, num_list, highlight=True, title=None, bar_type=0):
     fontsize = 30
-    plt.figure(figsize=(50, 15))
+    plt.figure(figsize=(50, 12))
     if bar_type == 0:
         if highlight:
             color_list = []
@@ -68,16 +69,16 @@ def statistic_visualization(label_list, num_list, highlight=True, title=None, ba
                            'hamster/rat', 'sheep/goat', 'penguin', 'rabbit', 'pig', 'kangaroo', 'cattle/cow', 'turtle',
                            'panda', 'leopard', 'tiger', 'camel', 'lion', 'crab', 'crocodile', 'stingray',
                            'bear', 'snake', 'squirrel']
-            object_list = ['toy', 'car', 'chair', 'table', 'cup', 'sofa', 'ball/sports ball', 'bottle',
-                           'screen/monitor', 'guitar', 'bicycle', 'backpack', 'baby seat', 'watercraft', 'camera',
+            object_list = ['toy', 'car', 'chair', 'table', 'cup', 'sofa', 'ball/sports_ball', 'bottle',
+                           'screen/monitor', 'guitar', 'bicycle', 'backpack', 'baby_seat', 'watercraft', 'camera',
                            'handbag',
                            'cellphone', 'laptop', 'stool', 'dish', 'motorcycle', 'bench', 'piano', 'ski',
-                           'cake', 'baby walker', 'snowboard', 'bat', 'bus/truck', 'surfboard', 'faucet',
-                           'electric fan',
-                           'sink', 'aircraft', 'refrigerator', 'skateboard', 'train', 'fruits', 'traffic light',
+                           'cake', 'baby_walker', 'snowboard', 'bat', 'bus/truck', 'surfboard', 'faucet',
+                           'electric_fan',
+                           'sink', 'aircraft', 'refrigerator', 'skateboard', 'train', 'fruits', 'traffic_light',
                            'suitcase',
                            'bread', 'microwave', 'scooter', 'racket', 'oven', 'antelope', 'vegetables', 'toilet',
-                           'stop sign', 'frisbee']
+                           'stop_sign', 'frisbee']
             # print(len(human_list))
             # print(len(animal_list))
             # print(len(object_list))
@@ -117,7 +118,7 @@ def statistic_visualization(label_list, num_list, highlight=True, title=None, ba
     plt.xlim([-1, len(label_list)])
     plt.legend(loc="upper right", prop={'size': 30})
     plt.tight_layout()
-    plt.savefig("{}.png".format(title), dpi=400)
+    plt.savefig("{}.pdf".format(title), dpi=400)
     plt.show()
 
 
@@ -165,62 +166,117 @@ def get_dataset_visualizations():
         # statistic_visualization(c, d, data_type + '_relations_1', 1)
 
 
+def get_dataset_visual_new():
+    obj_labels, obj_nums = statistic_objects()
+    statistic_visualization(obj_labels, obj_nums, title='train_objects')
+
+
 def statistic_objects():
     # ===================== Objects statistic
-    a, b, c, d = get_objects_relations_list('train')
+    # a, b, c, d = get_objects_relations_list('train')
+
     human_list = ['adult', 'child', 'baby']
     animal_list = ['dog', 'cat', 'bird', 'duck', 'horse', 'fish', 'elephant', 'chicken',
                    'hamster/rat', 'sheep/goat', 'penguin', 'rabbit', 'pig', 'kangaroo', 'cattle/cow', 'turtle',
                    'panda', 'leopard', 'tiger', 'camel', 'lion', 'crab', 'crocodile', 'stingray',
                    'bear', 'snake', 'squirrel']
-    object_list = ['toy', 'car', 'chair', 'table', 'cup', 'sofa', 'ball/sports ball', 'bottle',
-                   'screen/monitor', 'guitar', 'bicycle', 'backpack', 'baby seat', 'watercraft', 'camera',
+    object_list = ['toy', 'car', 'chair', 'table', 'cup', 'sofa', 'ball/sports_ball', 'bottle',
+                   'screen/monitor', 'guitar', 'bicycle', 'backpack', 'baby_seat', 'watercraft', 'camera',
                    'handbag',
                    'cellphone', 'laptop', 'stool', 'dish', 'motorcycle', 'bench', 'piano', 'ski',
-                   'cake', 'baby walker', 'snowboard', 'bat', 'bus/truck', 'surfboard', 'faucet',
-                   'electric fan',
-                   'sink', 'aircraft', 'refrigerator', 'skateboard', 'train', 'fruits', 'traffic light',
+                   'cake', 'baby_walker', 'snowboard', 'bat', 'bus/truck', 'surfboard', 'faucet',
+                   'electric_fan',
+                   'sink', 'aircraft', 'refrigerator', 'skateboard', 'train', 'fruits', 'traffic_light',
                    'suitcase',
                    'bread', 'microwave', 'scooter', 'racket', 'oven', 'antelope', 'vegetables', 'toilet',
-                   'stop sign', 'frisbee']
+                   'stop_sign', 'frisbee']
+    #
+    # label_list = list()
+    # label_list.extend(human_list)
+    # label_list.extend(object_list)
+    # label_list.extend(animal_list)
+    #
+    # anno_rpath = '/home/daivd/PycharmProjects/vidor/annotation'
+    # video_rpath = '/home/daivd/PycharmProjects/vidor/'
+    # splits = ['training', 'validation']
+    #
+    # dataset = VidOR(anno_rpath=anno_rpath,
+    #                 video_rpath=video_rpath,
+    #                 splits=splits)
+    # objs = []
+    # for each_split in splits:
+    #     for each_vid in dataset.get_index(each_split):
+    #         objs.extend(dataset.get_so_with_id(each_vid))
 
-    human_indexs = []
-    object_indexs = []
-    animal_indexs = []
-
-    index_id = 0
-    for each_obj in a:
-        if each_obj in human_list:
-            human_indexs.append(index_id)
-        elif each_obj in object_list:
-            object_indexs.append(index_id)
-        elif each_obj in animal_list:
-            animal_indexs.append(index_id)
-        else:
-            print(each_obj + '??????')
-        index_id += 1
+    # human_indexs = []
+    # object_indexs = []
+    # animal_indexs = []
+    #
+    # index_id = 0
+    # for each_obj in a:
+    #     if each_obj in human_list:
+    #         human_indexs.append(index_id)
+    #     elif each_obj in object_list:
+    #         object_indexs.append(index_id)
+    #     elif each_obj in animal_list:
+    #         animal_indexs.append(index_id)
+    #     else:
+    #         print(each_obj + '??????')
+    #     index_id += 1
 
     # print(str(len(human_indexs)) + ': ' + str(human_indexs))
     # print(str(len(object_indexs)) + ': ' + str(object_indexs))
     # print(str(len(animal_indexs)) + ': ' + str(animal_indexs))
 
-    human_sum = 0
-    object_sum = 0
-    animal_sum = 0
+    # human_sum = 0
+    # object_sum = 0
+    # animal_sum = 0
 
-    for each_human_idx in human_indexs:
-        human_sum += b[each_human_idx]
+    # for each_human_idx in human_indexs:
+    #     human_sum += b[each_human_idx]
+    #
+    # for each_obj_idx in object_indexs:
+    #     object_sum += b[each_obj_idx]
+    #
+    # for each_animal_idx in animal_indexs:
+    #     animal_sum += b[each_animal_idx]
 
-    for each_obj_idx in object_indexs:
-        object_sum += b[each_obj_idx]
+    # for each_obj in objs:
+    #     if each_obj in human_list:
+    #         human_sum += 1
+    #     if each_obj in object_list:
+    #         object_sum += 1
+    #     if each_obj in animal_list:
+    #         animal_sum += 1
+    #
+    #
+    # print(human_sum)  # 21749
+    # print(object_sum)  # 13773, 12510
+    # print(animal_sum)  # 3080, 3074
+    # print(human_sum + object_sum + animal_sum)  # 38602, 37333
 
-    for each_animal_idx in animal_indexs:
-        animal_sum += b[each_animal_idx]
+    # objs_sum = dict()
+    #
+    # for each_label in label_list:
+    #     objs_sum[each_label] = 0
+    #
+    # for each_obj in objs:
+    #     objs_sum[each_obj] += 1
+    #
+    # with open('train_objs_sum.json', 'w+') as out_f:
+    #     out_f.write(json.dumps(objs_sum))
 
-    print(human_sum)  # 21749
-    print(object_sum)  # 13773
-    print(animal_sum)  # 3080
-    print(human_sum + object_sum + animal_sum)  # 38602
+    with open('train_objs_sum.json', 'r') as in_f:
+        objs_sum = json.load(in_f)
+    objs_sum = sorted(objs_sum.items(), key=lambda o: o[1], reverse=True)
+
+    obj_labels = []
+    obj_sums = []
+    for o in objs_sum:
+        obj_labels.append(o[0])
+        obj_sums.append(o[1])
+
+    return obj_labels, obj_sums
 
 
 def statistic_relations():
@@ -385,7 +441,7 @@ if __name__ == '__main__':
     #     print(len(a))
     # statistic_relations()
     # statistic_objects()
-
+    get_dataset_visual_new()
     # statistic_vid_length(generate=False)
 
-    statistic_actions()
+    # statistic_actions()
