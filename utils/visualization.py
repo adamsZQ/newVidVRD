@@ -84,11 +84,11 @@ def statistic_visualization(label_list, num_list, highlight=True, title=None, ba
             # print(len(object_list))
             for each_label in label_list:
                 if each_label in human_list:
-                    color_list.append('#FFBFDF')  # light purple
+                    color_list.append('#8F8FEF')  # light purple
                 elif each_label in animal_list:
-                    color_list.append('#8F8FEF')  # sandybrown
+                    color_list.append('#FAA460')  # sandybrown
                 elif each_label in object_list:
-                    color_list.append('#FAA460')  # light pink
+                    color_list.append('#FFBFDF')  # light pink
                 else:
                     print('There isnt a type for: ' + each_label)
 
@@ -98,9 +98,9 @@ def statistic_visualization(label_list, num_list, highlight=True, title=None, ba
                     label_list[i] = label_list[i].replace(" ", "_")
 
             plt.bar(range(len(label_list)), num_list, color=color_list, tick_label=label_list)
-            plt.bar(0, 0, color='#FFBFDF', label='Human')
-            plt.bar(0, 0, color='#8F8FEF', label='Animal')
-            plt.bar(0, 0, color='#FAA460', label='Other')
+            plt.bar(0, 0, color='#8F8FEF', label='Human')
+            plt.bar(0, 0, color='#FAA460', label='Animal')
+            plt.bar(0, 0, color='#FFBFDF', label='Other')
         else:
             print('no highlight??')
             plt.bar(range(len(label_list)), num_list, color='#FAA460', tick_label=label_list)  # sandybrown
