@@ -24,4 +24,5 @@ xlwt
 easydict
 nltk
 dlib
+latex
 git+https://github.com/cocodataset/cocoapi.git#subdirectory=PythonAPI

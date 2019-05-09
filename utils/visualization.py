@@ -4,11 +4,17 @@ import os
 import matplotlib.pyplot as plt
 from matplotlib.ticker import ScalarFormatter
 import vord_utils
-import VORDInstance
 import numpy as np
 from dataset.vidor import VidOR
 from collections import Counter
 
+import matplotlib
+import latex
+
+matplotlib.rcParams['pdf.fonttype'] = 42
+matplotlib.rcParams['ps.fonttype'] = 42
+
+# matplotlib.rcParams['text.usetex'] = True
 
 # visualization for vord
 
@@ -79,9 +85,6 @@ def statistic_visualization(label_list, num_list, highlight=True, title=None, ba
                            'suitcase',
                            'bread', 'microwave', 'scooter', 'racket', 'oven', 'antelope', 'vegetables', 'toilet',
                            'stop_sign', 'frisbee']
-            # print(len(human_list))
-            # print(len(animal_list))
-            # print(len(object_list))
             for each_label in label_list:
                 if each_label in human_list:
                     color_list.append('#8F8FEF')  # light purple
@@ -153,7 +156,7 @@ def statistic_visualization_pro_4_rela(label_list, num_list,
     plt.ylim((1, 200000))
     plt.legend(loc="upper right", prop={'size': 30})
     plt.tight_layout()  # Amazing!!
-    plt.savefig("{}.png".format(title), dpi=400)
+    plt.savefig("{}.pdf".format(title), dpi=400)
     plt.show()
 
 
@@ -167,8 +170,11 @@ def get_dataset_visualizations():
 
 
 def get_dataset_visual_new():
-    obj_labels, obj_nums = statistic_objects()
-    statistic_visualization(obj_labels, obj_nums, title='train_objects')
+    # obj_labels, obj_nums = statistic_objects()
+    # statistic_visualization(obj_labels, obj_nums, title='train_objects')
+
+    label_list, num_list = statistic_relations_new()
+    statistic_visualization_pro_4_rela(label_list, num_list, title='train_relations')
 
 
 def statistic_objects():
@@ -277,6 +283,41 @@ def statistic_objects():
         obj_sums.append(o[1])
 
     return obj_labels, obj_sums
+
+
+def statistic_relations_new():
+    # anno_rpath = '/home/daivd/PycharmProjects/vidor/annotation'
+    # video_rpath = '/home/daivd/PycharmProjects/vidor/'
+    # splits = ['training', 'validation']
+    #
+    # dataset = VidOR(anno_rpath=anno_rpath,
+    #                 video_rpath=video_rpath,
+    #                 splits=splits)
+    #
+    # relation_dict = dict()
+    # for each_split in splits:
+    #     triplets = dataset.get_triplets(each_split, False)
+    #     for each_triplet in triplets:
+    #         s, rela, o = each_triplet
+    #         if rela in relation_dict.keys():
+    #             relation_dict[rela] += 1
+    #         else:
+    #             relation_dict[rela] = 1
+    #
+    # with open('train_rela_sum.json', 'w+') as out_f:
+    #     out_f.write(json.dumps(relation_dict))
+
+    with open('train_rela_sum.json', 'r') as in_f:
+        relation_dict = json.load(in_f)
+    rela_sum = sorted(relation_dict.items(), key=lambda o: o[1], reverse=True)
+
+    rela_labels = []
+    rela_sums = []
+    for o in rela_sum:
+        rela_labels.append(o[0])
+        rela_sums.append(o[1])
+
+    return rela_labels, rela_sums
 
 
 def statistic_relations():
