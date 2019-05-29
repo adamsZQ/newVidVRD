@@ -48,13 +48,16 @@ def extract_frames(video_file, num_frames=8):
     return res_frames, extract_frame_paths
 
 
-def extract_all_frames(video_file):
+def extract_all_frames(video_file, frame_path=None):
     try:
         os.makedirs(os.path.join(os.getcwd(), 'frames/' + video_file[:-4]))
     except OSError:
         pass
 
-    extract_frame_path = os.getcwd() + '/frames/' + video_file[:-4]
+    if frame_path is None:
+        extract_frame_path = os.getcwd() + '/frames/' + video_file[:-4]
+    else:
+        extract_frame_path = frame_path
     os.system('ffmpeg -i ' + video_file + ' ' + extract_frame_path + '/%4d.jpg')
     return extract_frame_path
 
@@ -85,4 +88,6 @@ if __name__ == '__main__':
     #     for each_file in files:
     #         print(extract_frames(each_file))
 
-    extract_all_frames('/home/daivd/PycharmProjects/vidor/val_vids/0004/3022452780.mp4')
+    video_path = '/Users/davidddl/Downloads/example/4171312526.mp4'
+    frame_path = '/Users/davidddl/Downloads/example/'
+    extract_all_frames(video_path, frame_path)
